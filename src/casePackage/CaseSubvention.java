@@ -3,9 +3,11 @@ package casePackage;
 public class CaseSubvention extends Case{
 	protected int montant;
 
-	public void setMontant(int value){
-	  this.montant = value;
+		/* Constructeur */
+	public CaseSubvention(int mon) {
+		this.montant = mon;
 	}
+	
 	public int getMontant(){
 	  return this.montant;
 	}
