@@ -19,6 +19,10 @@ public class CaseInvestissement extends Case{
 		  return this.valeurNominale;
 	  }
 	  
+	  public int getBenerfice() {
+		  return this.benefice;
+	  }
+	  
 	  public void caseAcheter(int indice_joueur) {
 		  this.appartenanceEtat = false;
 		  this.appartenanceJoueur = indice_joueur;
