@@ -1,6 +1,6 @@
 package casePackage;
 
-public class CaseInvestissement extends Case{
+public class CaseInvestissement extends Case implements Comparable<CaseInvestissement>{
 	  protected boolean appartenanceEtat;
 	  /* Indice du tableau joueurs auquel caseInvestissemnt appartient. Si �a appartient � l�tat alors cela est �gal � -1 */
 	  protected int appartenanceJoueur; 
@@ -19,7 +19,7 @@ public class CaseInvestissement extends Case{
 		  return this.valeurNominale;
 	  }
 	  
-	  public double getBenerfice() {
+	  public double getBenefice() {
 		  return this.benefice;
 	  }
 	  
@@ -27,5 +27,11 @@ public class CaseInvestissement extends Case{
 		  this.appartenanceEtat = false;
 		  this.appartenanceJoueur = indice_joueur;
 	  }
+
+	@Override
+	public int compareTo(CaseInvestissement o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	  
 }

@@ -1,4 +1,6 @@
-/plateauPackage/
+/joueurPackage/
 /casePackage/
-/exceptionPackage/
 /testPackage/
+/plateauPackage/
+/exceptionPackage/
+*.class
