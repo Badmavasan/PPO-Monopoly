@@ -1,5 +1,5 @@
 package configurationPackage;
-
+import java.util.*;
 
 public class ConfigurationJeu {
 	
@@ -7,14 +7,16 @@ public class ConfigurationJeu {
 	protected int joueurs_prudents;
 	protected double capital_joueurs_dep;
 	protected double capital_etat;
-	protected int investissement_max_joueur_prudent;
+	protected List<Integer> investissement_max_joueur_prudent;
 	
-	public ConfigurationJeu (int ja, int jp, double cj, double ce, int inv){
+	public ConfigurationJeu (int ja, int jp, double cj, double ce, int[] inv){
 		joueurs_agressifs=ja;
 		joueurs_prudents=jp;
 		capital_joueurs_dep=cj;
 		capital_etat=ce;
-		investissement_max_joueur_prudent=inv;
+		for(int i: inv){
+			investissement_max_joueur_prudent.add(i);
+		}
 	}
 	
 	public int getJoueursAgressifs(){
@@ -33,7 +35,7 @@ public class ConfigurationJeu {
 		return capital_joueurs_dep;
 	}
 	
-	public int getInvestissementMax(){
+	public List<Integer> getInvestissementMax(){
 		return investissement_max_joueur_prudent;
 	}
 }
