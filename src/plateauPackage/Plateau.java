@@ -16,7 +16,7 @@ public class Plateau {
 		// bfpp : investissement à taxer
 		// r : repos
 		// at : anti trust 
-		// Les valeurs seront genere aleatoirement 
+		// Les valeurs sont entré en dure mais on peut les generer automatiquement 
 		int[] investissementVal = {400000,70,540,730,1300,5340,5340,70,100,1000,5000,4300,100,400000,5000,400000,10000,730};
 		double[] investissementPour = {5,10,10,7,2,10,10,10,20,5,3,5,20,0.5,3,5,1,7};
 		int[] atVal= {3500,40000};

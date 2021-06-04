@@ -1,17 +1,24 @@
 package jeuPackage;
 import configurationPackage.*;
+import exceptionPackage.*;
+
 import java.util.*;
 import joueurPackage.*;
 import plateauPackage.*;
 
 public class Simulation {
+	Plateau plateau;
+	List <Joueur> joueurs;
 	
-	List <Joueur> joueurs = new ArrayList<Joueur>(); 
-	Plateau plateau; /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
-	
-	public static void main(String[] args) {
+	public Simulation() throws PlateauCreationFailedException {
+		try{
+			plateau = new Plateau(); /* Sera initalisÃ© apres avoir apris les configuration de la part de l'utilisateur */
+			joueurs = new ArrayList<Joueur>();
+			initJoueurList(5,5);
+		}catch(PlateauCreationFailedException ex){
+			throw new PlateauCreationFailedException();
+		}
 		
-
 	}
 	
 	public static ConfigurationJeu menu() {
@@ -19,10 +26,6 @@ public class Simulation {
         
         return configs;
     }
-	
-	public static void jeuSimulation() {
-		
-	}
 	
 	public static void initJoueurList(int nbJoueursAgressif,int nbJoueursPrudent) {
 		

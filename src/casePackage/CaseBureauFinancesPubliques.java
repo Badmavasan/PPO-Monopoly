@@ -17,4 +17,8 @@ public class CaseBureauFinancesPubliques extends Case{
 	  public int getImpotPercentage(){
 	    return this.impotPercentage;
 	  }
+	  
+	  public boolean getTaxArgent(){
+		  return this.taxArgent;
+	  }
 }
