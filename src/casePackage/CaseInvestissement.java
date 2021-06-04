@@ -2,13 +2,13 @@ package casePackage;
 
 public class CaseInvestissement extends Case{
 	  protected boolean appartenanceEtat;
-	  /* Indice du tableau joueurs auquel caseInvestissemnt appartient. Si ça appartient à létat alors cela est égal à -1 */
+	  /* Indice du tableau joueurs auquel caseInvestissemnt appartient. Si ï¿½a appartient ï¿½ lï¿½tat alors cela est ï¿½gal ï¿½ -1 */
 	  protected int appartenanceJoueur; 
 	  protected int valeurNominale;
 	  /* la valeur de benefice est compris entre 0 et 100 : c'est une porcentage */
-	  protected int benefice;
+	  protected double benefice;
 	  
-	  public CaseInvestissement(int valNom, int benef) {
+	  public CaseInvestissement(int valNom, double benef) {
 		  this.valeurNominale = valNom;
 		  this.benefice = benef;
 		  this.appartenanceEtat = true;
@@ -19,7 +19,7 @@ public class CaseInvestissement extends Case{
 		  return this.valeurNominale;
 	  }
 	  
-	  public int getBenerfice() {
+	  public double getBenerfice() {
 		  return this.benefice;
 	  }
 	  

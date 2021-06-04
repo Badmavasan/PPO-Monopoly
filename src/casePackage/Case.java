@@ -1,6 +1,6 @@
 package casePackage;
 
-public class Case {
+public abstract class Case {
 	protected int indice;
 
 	public void setIndice(int indice){
