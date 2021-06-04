@@ -17,14 +17,14 @@ public abstract class Joueur {
 	  protected List<CaseInvestissement> investissement;
 
 	  // the action of the player in the Investissement case
-	  public abstract void actionInvestissement();
+	  public abstract boolean actionInvestissement(int valeur_achat);
 
 	  // the action of the player in the Loi Antitruist case
-	  public abstract void actionAntiTrust();
+	  public abstract void actionAntiTrust(int max);
 
 	  /* CONSTRUCTEUR */
-	  public Joueur(int soldesLiquideDepart){ // les joueurs sont par défault à la case 0
-	    this.indice = 0; // TODO : CHanger l'indice de départ en fonction de construction du plateau
+	  public Joueur(int soldesLiquideDepart){ // les joueurs sont par dï¿½fault ï¿½ la case 0
+	    this.indice = 0; // TODO : CHanger l'indice de dï¿½part en fonction de construction du plateau
 	    this.soldes_liquide = soldesLiquideDepart;
 	    this.investissement = new ArrayList <CaseInvestissement> ();
 	  }
