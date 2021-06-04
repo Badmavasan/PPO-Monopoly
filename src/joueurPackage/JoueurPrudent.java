@@ -6,7 +6,7 @@ public class JoueurPrudent extends Joueur{
 	
 	protected int investMax;
 	
-	public JoueurPrudent(int initialSum,int val){
+	public JoueurPrudent(double initialSum,int val){
 	    super(initialSum);
 	    this.investMax=val;
 	  }

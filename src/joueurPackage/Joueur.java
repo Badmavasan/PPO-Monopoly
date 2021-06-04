@@ -23,7 +23,7 @@ public abstract class Joueur {
 	  public abstract void actionAntiTrust(int max);
 
 	  /* CONSTRUCTEUR */
-	  public Joueur(int soldesLiquideDepart){ // les joueurs sont par d�fault � la case 0
+	  public Joueur(double soldesLiquideDepart){ // les joueurs sont par d�fault � la case 0
 	    this.indice = 0; // TODO : CHanger l'indice de d�part en fonction de construction du plateau
 	    this.soldes_liquide = soldesLiquideDepart;
 	    this.investissement = new ArrayList <CaseInvestissement> ();

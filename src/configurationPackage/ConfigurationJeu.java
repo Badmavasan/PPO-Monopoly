@@ -1,28 +1,39 @@
 package configurationPackage;
-import java.util.Scanner;
 
 
 public class ConfigurationJeu {
 	
-	int main(){
-		/*System.out.println("Choisissez le type de simulation souhaité:");
-		System.out.println("1- NeoLiberal ");
-		System.out.println("2-Socialiste ");
-		System.out.println("3-Capitaliste ");
-		System.out.println("4-Progressiste ");
-		System.out.println("5-l'Europe après le Covid-19");
-		int i=0;
-		Scanner sc= new Scanner(System.in);
-		i=sc.next();
-		if(i==1){
-		} else if(i==2){
-		}else if (i==3){
-		}else if (i==4){
-		}else{
-		}
-		
-		*/
-		return 0;
+	protected int joueurs_agressifs;
+	protected int joueurs_prudents;
+	protected double capital_joueurs_dep;
+	protected double capital_etat;
+	protected int investissement_max_joueur_prudent;
+	
+	public ConfigurationJeu (int ja, int jp, double cj, double ce, int inv){
+		joueurs_agressifs=ja;
+		joueurs_prudents=jp;
+		capital_joueurs_dep=cj;
+		capital_etat=ce;
+		investissement_max_joueur_prudent=inv;
 	}
-
+	
+	public int getJoueursAgressifs(){
+		return joueurs_agressifs;
+	}
+	
+	public int getJoueursPrudents(){
+		return joueurs_prudents;
+	}
+	
+	public double getCapitalEtat (){
+		return capital_etat;
+	}
+	
+	public double getCapitalJoueursDep(){
+		return capital_joueurs_dep;
+	}
+	
+	public int getInvestissementMax(){
+		return investissement_max_joueur_prudent;
+	}
 }

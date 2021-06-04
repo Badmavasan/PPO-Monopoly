@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class JoueurAgressif extends Joueur{
 	
-	  public JoueurAgressif(int soldes_liq_dep){
+	  public JoueurAgressif(double soldes_liq_dep){
 	    super(soldes_liq_dep);
 	  }
 	  
