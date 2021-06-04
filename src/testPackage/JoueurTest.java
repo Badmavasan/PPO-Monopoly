@@ -19,8 +19,8 @@ public class JoueurTest {
 
 	  @Test
 	  public void joueurTransferToTest() throws JoueurBrokeException{
-		  JoueurPrudent player1 = new JoueurPrudent(5000);
-		  JoueurPrudent player2 = new JoueurPrudent(5000);
+		  JoueurPrudent player1 = new JoueurPrudent(5000,10);
+		  JoueurPrudent player2 = new JoueurPrudent(5000,10);
 		  try{
 			  player1.transferTo(player2,2000);
 		  }catch(JoueurBrokeException ex){
