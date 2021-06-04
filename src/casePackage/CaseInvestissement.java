@@ -6,9 +6,9 @@ public class CaseInvestissement extends Case implements Comparable<CaseInvestiss
 	  protected int appartenanceJoueur; 
 	  protected int valeurNominale;
 	  /* la valeur de benefice est compris entre 0 et 100 : c'est une porcentage */
-	  protected int benefice;
+	  protected double benefice;
 	  
-	  public CaseInvestissement(int valNom, int benef) {
+	  public CaseInvestissement(int valNom, double benef) {
 		  this.valeurNominale = valNom;
 		  this.benefice = benef;
 		  this.appartenanceEtat = true;
@@ -19,7 +19,7 @@ public class CaseInvestissement extends Case implements Comparable<CaseInvestiss
 		  return this.valeurNominale;
 	  }
 	  
-	  public int getBenefice() {
+	  public double getBenefice() {
 		  return this.benefice;
 	  }
 	  
