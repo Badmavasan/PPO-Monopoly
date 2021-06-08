@@ -3,6 +3,7 @@ import plateauPackage.*;
 import configurationPackage.*;
 import exceptionPackage.*;
 import casePackage.*;
+import etatPackage.*;
 
 import static org.junit.Assert.*;
 
@@ -21,12 +22,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseInvestissement){
 		    		somme = somme + 1;
@@ -46,12 +47,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseSubvention){
 		    		somme = somme + 1;
@@ -71,12 +72,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseRepos){
 		    		somme = somme + 1;
@@ -96,12 +97,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	Case x = iter.next();
 		    	if(x instanceof CaseBureauFinancesPubliques){
@@ -125,12 +126,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	Case x = iter.next();
 		    	if(x instanceof CaseBureauFinancesPubliques){
@@ -154,12 +155,12 @@ public class PlateauTest {
 		invest.add(3);
 		invest.add(2);
 		invest.add(1);
-		
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "Capitaliste");
 		try{
-			ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "Capitaliste");
-			Plateau plat = new Plateau(configs);
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			boolean finding = false;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	Case x = iter.next();
 		    	if(x instanceof CaseSubvention){

@@ -1,15 +1,16 @@
 package plateauPackage;
 import casePackage.*;
 import configurationPackage.*;
+import etatPackage.*;
 
 import exceptionPackage.*;
 
 import java.util.*;
 
 public class Plateau {
-	protected List<Case> cases;
+	public List<Case> cases;
 	
-	public Plateau(ConfigurationJeu configs) throws PlateauCreationFailedException{
+	public Plateau(ConfigurationJeu configs,Etat etat) throws PlateauCreationFailedException{
 		String[] ref = {"r","i","bfpa","i","i","at","i","i","r","i","s","i","i","bfpp","i","bfpa","r","i","bfpa","i","i","i","bfpp","i","r","at","i","bfpa","i","i","bfpp","i"};
 		// on inialise les valeurs du plateau on va contruire le plateau en fonction de ca nature
 		// i: investissement
@@ -65,7 +66,7 @@ public class Plateau {
 			investissementPour[17] = 7;
 			/* l etat fixe des investissement normal */
 		}
-		if(configs.getProfile().equals("Socialiste")) {
+		else if(configs.getProfile().equals("Socialiste")) {
 			
 			/* Initialisation des lois anti Trust */ 
 			atVal[0] = 3500;
@@ -108,7 +109,7 @@ public class Plateau {
 			/* l etat fixe des investissement normal */
  
 		}
-		if(configs.getProfile().equals("Capitaliste")) {
+		else if(configs.getProfile().equals("Capitaliste")) {
 			
 			/* Initialisation des lois anti Trust */ 
 			atVal[0] = 7000;
@@ -126,7 +127,7 @@ public class Plateau {
 			/* L'etat fixe beaucoup de taxe donc on augmente le pourcentage de tax */ 
 			
 			/* Intialisation de subvention */
-			sub = 1000;
+			sub = 10000;
 			/* L etat fixe une subvention normal */
 			
 			/* Initialisation de pourcentage d'investissement */
@@ -151,7 +152,7 @@ public class Plateau {
 			/* l etat fixe des investissement normal */
 			
 		}
-		if(configs.getProfile().equals("Capitaliste")) {
+		else if(configs.getProfile().equals("Capitaliste")) {
 			
 			/* Initialisation des lois anti Trust */ 
 			atVal[0] = 3500;
@@ -205,20 +206,22 @@ public class Plateau {
 		int parcours_investissementPour = 0;
 		int parcours_atVal = 0;
 		int parcours_bfpPour = 0;
+		int parcours_indice = 1;
 		for (String i : ref){
 			if(i=="i"){
 				try{
-					CaseInvestissement caseIn = new CaseInvestissement(investissementVal[parcours_investissementVal], investissementPour[parcours_investissementPour]);
+					CaseInvestissement caseIn = new CaseInvestissement(parcours_indice,investissementVal[parcours_investissementVal], investissementPour[parcours_investissementPour]);
 					parcours_investissementVal++;
 					parcours_investissementPour++;
 					cases.add(caseIn);
+					etat.addToInvestissement(caseIn);
 				}catch(NullPointerException ex){
 					throw new PlateauCreationFailedException(); 
 				}
 			}
 			else if(i=="bfpa"){
 				try{
-					CaseBureauFinancesPubliques caseBfp = new CaseBureauFinancesPubliques(bfpPour[parcours_bfpPour],true);
+					CaseBureauFinancesPubliques caseBfp = new CaseBureauFinancesPubliques(parcours_indice,bfpPour[parcours_bfpPour],true);
 					parcours_bfpPour++;
 					cases.add(caseBfp);
 				}catch(NullPointerException ex){
@@ -227,7 +230,7 @@ public class Plateau {
 			}
 			else if(i=="bfpp"){
 				try{
-					CaseBureauFinancesPubliques caseBfp = new CaseBureauFinancesPubliques(bfpPour[parcours_bfpPour],false);
+					CaseBureauFinancesPubliques caseBfp = new CaseBureauFinancesPubliques(parcours_indice,bfpPour[parcours_bfpPour],false);
 					parcours_bfpPour++;
 					cases.add(caseBfp);
 				}catch(NullPointerException ex){
@@ -236,7 +239,7 @@ public class Plateau {
 			}
 			else if(i=="s"){
 				try{
-					CaseSubvention caseSub = new CaseSubvention(sub);
+					CaseSubvention caseSub = new CaseSubvention(parcours_indice,sub);
 					cases.add(caseSub);
 				}catch(NullPointerException ex){
 					throw new PlateauCreationFailedException(); 
@@ -244,7 +247,7 @@ public class Plateau {
 			}
 			else if(i=="r"){
 				try{
-					CaseRepos caseRep = new CaseRepos();
+					CaseRepos caseRep = new CaseRepos(parcours_indice);
 					cases.add(caseRep);
 				}catch(NullPointerException ex){
 					throw new PlateauCreationFailedException(); 
@@ -252,7 +255,7 @@ public class Plateau {
 			}
 			else if(i=="at"){
 				try{
-					CaseLoiAntitrust caseAt = new CaseLoiAntitrust(atVal[parcours_atVal]);
+					CaseLoiAntitrust caseAt = new CaseLoiAntitrust(parcours_indice,atVal[parcours_atVal]);
 					parcours_atVal++;
 					cases.add(caseAt);
 				}catch(NullPointerException ex){
@@ -262,13 +265,10 @@ public class Plateau {
 			else{
 				throw new PlateauCreationFailedException();
 			}
+			parcours_indice++;
 		}
 		
 		
-	}
-	
-	public List<Case> getCases(){
-		return this.cases;
 	}
 	
 }
