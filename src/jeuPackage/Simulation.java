@@ -98,7 +98,7 @@ public class Simulation {
 //					}
 				}
 				
-
+				removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove);
 				
 				System.out.println(">>>>>>>>>>>>>>>>> Etat has : " + etat.getSoldesLiquide());
 				System.out.println("No. of current players : " + joueurs.joueurs.size());
@@ -106,7 +106,6 @@ public class Simulation {
 				//cont = toContinue();
 				jeuFini = checkEndofGame(joueurs/*,cont*/);
 				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
-				print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
 			}
 			System.out.println("Etat echoue : " + etatLost);
 			print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
@@ -214,6 +213,7 @@ public class Simulation {
 		System.out.println("       Investissements:"+ etat.getSoldesInvestissement());
 		System.out.println("       Liquide: "+ etat.getSoldesLiquide());
 	}
+
 	
 	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
 		if(indiceOfJoueursToRemove.size()>0) {
