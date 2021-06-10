@@ -51,7 +51,7 @@ public class JoueurTest {
 	  public void joueurMoveTest(){
 		  JoueurAgressif player = new JoueurAgressif(5000,1);
 		  player.movePlayerTo(5);
-		  assertEquals(player.getPosition(),5,0);
+		  assertEquals(player.getPosition(),6);
 	  }
 	  
 	  @Test

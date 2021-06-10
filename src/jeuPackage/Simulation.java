@@ -9,18 +9,18 @@ import etatPackage.*;
 import casePackage.*;
 
 public class Simulation {
+	static Scanner sc = new Scanner (System.in); // opening scanner
 	
 	public static void main(String[] args) {
 		/* ----------------------- INITIALISATION DE JOUEURS ET PLATEAU EN FONCTION DE CONFIGURATION ------------------------- */
 		try{
 			ConfigurationJeu configs = menu();
 			
-			Scanner sc = new Scanner (System.in); // opening scanner
 			Plateau plateau;
 			Joueurs joueurs;
 			Joueurs joueursPerdu;
 			
-//			String cont; // continue 
+			boolean cont; // continue 
 			Etat etat = new Etat(configs);
 			plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
 			joueurs = new Joueurs(configs);
@@ -37,27 +37,28 @@ public class Simulation {
 			int player_current_location;
 			boolean etatLost = false;
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
-//			while(!jeuFini && !etatLost){
+			while(!jeuFini && !etatLost){
 				
 				int parcours_liste_joueurs = 0; 
-				
+				System.out.println("--------- One tour ------------");
 				
 				while(parcours_liste_joueurs < joueurs.joueurs.size() && !etatLost && !jeuFini) {
 					
 					dice_value = getRandomNumberUsingNextInt(1, 6);
+					System.out.println("Nombres de joueurs au depart de chaque boucle : " + joueurs.joueurs.size());
 					System.out.println("parcours joueurs : " + parcours_liste_joueurs);
-					System.out.println("debug 1 before dice : " + joueurs.joueurs.get(parcours_liste_joueurs).getPosition());
 
 					joueurs.joueurs.get(parcours_liste_joueurs).movePlayerTo(dice_value);
 					player_current_location = joueurs.joueurs.get(parcours_liste_joueurs).getPosition();
-					System.out.println("debug 2 : " + player_current_location);
 					Case c = plateau.cases.get(player_current_location-1);
 					Joueur j = joueurs.joueurs.get(parcours_liste_joueurs);
-					System.out.println("Current player id : " + j.getId());
 					if(c instanceof CaseBureauFinancesPubliques) {
-						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu);
+						System.out.println("Case Bureau Finances Publiques");
+						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu,parcours_liste_joueurs);
+						System.out.println("Tax paying Etat after tax " + etat.getSoldesLiquide());
 					}
 					else if(c instanceof CaseInvestissement) {
+						System.out.println("Case Investissement");
 						try {
 							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs);
 						}
@@ -69,14 +70,18 @@ public class Simulation {
 						}
 					}
 					else if(c instanceof CaseSubvention) {
+						System.out.println("Case Subvention");
 						try {
 						 ((CaseSubvention)c).action(j, etat);
 						}
 						catch(EtatBrokeException ex){
 							etatLost = true;
+							System.out.println("Etat lost : " + etat.getSoldesLiquide() + "Had to pay : " +((CaseSubvention)c).getMontant());
+							
 						}
 					}
 					else if(c instanceof CaseLoiAntitrust) {
+						System.out.println("Case Loi Anti Trust ");
 						try {
 							((CaseLoiAntitrust)c).action(j,etat,plateau);
 						}
@@ -95,13 +100,13 @@ public class Simulation {
 						jeuFini = true;
 					}
 				}
-				//System.out.println("Voulez vous continuer le jeu [Y/N] : ");
-				//cont = sc.nextLine();   
-//				jeuFini = checkEndofGame(joueurs,/*cont,*/etat);
-//				System.out.println(" JeuFini Verif : " + jeuFini);
-//			}
+				System.out.println(">>>>>>>>>>>>>>>>>Etat has : " + etat.getSoldesLiquide());
+				cont = toContinue();
+				jeuFini = checkEndofGame(joueurs,cont,etat);
+				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
+			}
+			System.out.println("Etat echoue : " + etatLost);
 			/* -------------------------------------------- */
-			sc.close();
 		}catch(PlateauCreationFailedException ex){
 			System.out.println("Plateau creation has failed");
 		}catch(JoueurListCreationFailedException ex){
@@ -110,17 +115,23 @@ public class Simulation {
 		/*--------------------------------------------------------------------------------------------------------------*/
 	}
 
+	public static boolean toContinue() {
+		char cont;
+		System.out.println("Voulez vous continuer le jeu [Y/N] : ");
+		cont = sc.next().charAt(0);
+		if(cont=='Y' || cont =='y') {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
-	public static boolean checkEndofGame(Joueurs joueurs, /*String cont,*/ Etat etat){ 
+	public static boolean checkEndofGame(Joueurs joueurs, boolean cont,Etat etat){ 
 		boolean condition1 = false;
-//		boolean condition2 = false;
 		if(joueurs.joueurs.size()==1){
 			condition1 = true;
 		}
-//		if(cont=="Y"){
-//			condition2 = true;
-//		}
-		return condition1 /*&& condition2*/;
+		return condition1 && cont;
 	}
 	
 	public static ConfigurationJeu menu(){
@@ -130,7 +141,6 @@ public class Simulation {
 		double capital_etat = 0;
 		List<Integer> invest = new ArrayList<Integer>();
 		String profile;
-		Scanner sc = new Scanner (System.in); // opening scanner 
 		System.out.println("Il y a 4 types du jeu NeoLiberal, Socialiste, Capitaliste, Progressiste");
 		System.out.println("Entrez le profile du jeu (Utiliser le meme facon qu'au dessus) : ");
 		profile = sc.nextLine();
@@ -152,7 +162,6 @@ public class Simulation {
 			System.out.println("Entrez le nombre d'investissement max de joueur prudent " + (i+1)+ " : ");
 			invest.add(sc.nextInt());
 		}
-		sc.close(); // closing scanner as it's used inside a function 
 		ConfigurationJeu config = new ConfigurationJeu(joueurs_agressifs, joueurs_prudents, capital_dep, capital_etat, invest, profile);
 		return config;
 	}

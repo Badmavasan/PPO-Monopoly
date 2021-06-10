@@ -21,8 +21,8 @@ public class Plateau {
 		// at : anti trust 
 		// Les valeurs sont entré en dure mais on peut les generer automatiquement
 		
-		int[] atVal = new int[2]; // L'etat defini des lois d'antitrust leger 
-		int[] bfpPour = new int[7];
+		double[] atVal = new double[2]; // L'etat defini des lois d'antitrust leger 
+		double[] bfpPour = new double[7];
 		int sub = 0;
 		double[] investissementPour = new double[18];
 		if(configs.getProfile().equals("NeoLiberal")) {
@@ -32,13 +32,13 @@ public class Plateau {
 			/* L'etat defini des lois d'antitrust leger */ 
 			
 			/* Intialisation des pourcentages de taxes */
-			bfpPour[0] = 5;
-			bfpPour[0] = 1;
-			bfpPour[0] = 10;
-			bfpPour[0] = 15;
-			bfpPour[0] = 2;
-			bfpPour[0] = 10;
-			bfpPour[0] = 5;
+			bfpPour[0] = 0.05;
+			bfpPour[0] = 0.01;
+			bfpPour[0] = 0.1;
+			bfpPour[0] = 0.15;
+			bfpPour[0] = 0.2;
+			bfpPour[0] = 0.1;
+			bfpPour[0] = 0.5;
 			/* L etat defini des pourcentages de taxes  normal */ 
 			
 			/* Intialisation de subvention */
@@ -46,24 +46,24 @@ public class Plateau {
 			/* L etat fixe une subvention normal */
 			
 			/* Initialisation de pourcentage d'investissement */
-			investissementPour[0] = 5;
-			investissementPour[1] = 10;
-			investissementPour[2] = 10;
-			investissementPour[3] = 7;
-			investissementPour[4] = 2;
-			investissementPour[5] = 10;
-			investissementPour[6] = 10;
-			investissementPour[7] = 10;
-			investissementPour[8] = 20;
-			investissementPour[9] = 5;
-			investissementPour[10] = 3;
-			investissementPour[11] = 5;
-			investissementPour[12] = 20;
-			investissementPour[13] = 0.5;
-			investissementPour[14] = 3;
-			investissementPour[15] = 5;
-			investissementPour[16] = 1;
-			investissementPour[17] = 7;
+			investissementPour[0] = 0.05;
+			investissementPour[1] = 0.10;
+			investissementPour[2] = 0.10;
+			investissementPour[3] = 0.07;
+			investissementPour[4] = 0.02;
+			investissementPour[5] = 0.10;
+			investissementPour[6] = 0.10;
+			investissementPour[7] = 0.10;
+			investissementPour[8] = 0.20;
+			investissementPour[9] = 0.05;
+			investissementPour[10] = 0.03;
+			investissementPour[11] = 0.05;
+			investissementPour[12] = 0.20;
+			investissementPour[13] = 0.005;
+			investissementPour[14] = 0.03;
+			investissementPour[15] = 0.05;
+			investissementPour[16] = 0.01;
+			investissementPour[17] = 0.07;
 			/* l etat fixe des investissement normal */
 		}
 		else if(configs.getProfile().equals("Socialiste")) {
@@ -74,13 +74,13 @@ public class Plateau {
 			/* L'etat defini des lois d'antitrust normal */ 
 			
 			/* Intialisation des pourcentages de taxes */
-			bfpPour[0] = 7;
-			bfpPour[0] = 3;
-			bfpPour[0] = 13;
-			bfpPour[0] = 20;
-			bfpPour[0] = 7;
-			bfpPour[0] = 11;
-			bfpPour[0] = 8;
+			bfpPour[0] = 0.07;
+			bfpPour[0] = 0.03;
+			bfpPour[0] = 0.13;
+			bfpPour[0] = 0.20;
+			bfpPour[0] = 0.07;
+			bfpPour[0] = 0.11;
+			bfpPour[0] = 0.8;
 			/* L'etat fixe beaucoup de taxe donc on augmente le pourcentage de tax */ 
 			
 			/* Intialisation de subvention */
@@ -88,24 +88,24 @@ public class Plateau {
 			/* L etat fixe une subvention normal */
 			
 			/* Initialisation de pourcentage d'investissement */
-			investissementPour[0] = 5;
-			investissementPour[1] = 10;
-			investissementPour[2] = 10;
-			investissementPour[3] = 7;
-			investissementPour[4] = 2;
-			investissementPour[5] = 10;
-			investissementPour[6] = 10;
-			investissementPour[7] = 10;
-			investissementPour[8] = 20;
-			investissementPour[9] = 5;
-			investissementPour[10] = 3;
-			investissementPour[11] = 5;
-			investissementPour[12] = 20;
-			investissementPour[13] = 0.5;
-			investissementPour[14] = 3;
-			investissementPour[15] = 5;
-			investissementPour[16] = 1;
-			investissementPour[17] = 7;
+			investissementPour[0] = 0.5;
+			investissementPour[1] = 0.10;
+			investissementPour[2] = 0.10;
+			investissementPour[3] = 0.07;
+			investissementPour[4] = 0.02;
+			investissementPour[5] = 0.10;
+			investissementPour[6] = 0.10;
+			investissementPour[7] = 0.10;
+			investissementPour[8] = 0.20;
+			investissementPour[9] = 0.05;
+			investissementPour[10] = 0.03;
+			investissementPour[11] = 0.05;
+			investissementPour[12] = 0.20;
+			investissementPour[13] = 0.005;
+			investissementPour[14] = 0.03;
+			investissementPour[15] = 0.05;
+			investissementPour[16] = 0.01;
+			investissementPour[17] = 0.07;
 			/* l etat fixe des investissement normal */
  
 		}
@@ -117,13 +117,13 @@ public class Plateau {
 			/* L'etat defini des lois d'antitrust normal */ 
 			
 			/* Intialisation des pourcentages de taxes */
-			bfpPour[0] = 7;
-			bfpPour[0] = 3;
-			bfpPour[0] = 13;
-			bfpPour[0] = 20;
-			bfpPour[0] = 7;
-			bfpPour[0] = 11;
-			bfpPour[0] = 8;
+			bfpPour[0] = 0.07;
+			bfpPour[0] = 0.03;
+			bfpPour[0] = 0.13;
+			bfpPour[0] = 0.20;
+			bfpPour[0] = 0.07;
+			bfpPour[0] = 0.11;
+			bfpPour[0] = 0.08;
 			/* L'etat fixe beaucoup de taxe donc on augmente le pourcentage de tax */ 
 			
 			/* Intialisation de subvention */
@@ -131,24 +131,24 @@ public class Plateau {
 			/* L etat fixe une subvention normal */
 			
 			/* Initialisation de pourcentage d'investissement */
-			investissementPour[0] = 10;
-			investissementPour[1] = 20;
-			investissementPour[2] = 20;
-			investissementPour[3] = 17;
-			investissementPour[4] = 12;
-			investissementPour[5] = 20;
-			investissementPour[6] = 20;
-			investissementPour[7] = 20;
-			investissementPour[8] = 30;
-			investissementPour[9] = 10;
-			investissementPour[10] = 30;
-			investissementPour[11] = 10;
-			investissementPour[12] = 30;
-			investissementPour[13] = 5;
-			investissementPour[14] = 7;
-			investissementPour[15] = 10;
-			investissementPour[16] = 12;
-			investissementPour[17] = 17;
+			investissementPour[0] = 0.10;
+			investissementPour[1] = 0.20;
+			investissementPour[2] = 0.20;
+			investissementPour[3] = 0.17;
+			investissementPour[4] = 0.12;
+			investissementPour[5] = 0.20;
+			investissementPour[6] = 0.20;
+			investissementPour[7] = 0.20;
+			investissementPour[8] = 0.30;
+			investissementPour[9] = 0.10;
+			investissementPour[10] = 0.30;
+			investissementPour[11] = 0.10;
+			investissementPour[12] = 0.30;
+			investissementPour[13] = 0.05;
+			investissementPour[14] = 0.07;
+			investissementPour[15] = 0.10;
+			investissementPour[16] = 0.12;
+			investissementPour[17] = 0.17;
 			/* l etat fixe des investissement normal */
 			
 		}
@@ -160,13 +160,13 @@ public class Plateau {
 			/* L'etat defini des lois d'antitrust normal */ 
 			
 			/* Intialisation des pourcentages de taxes */
-			bfpPour[0] = 5;
-			bfpPour[0] = 1;
-			bfpPour[0] = 10;
-			bfpPour[0] = 15;
-			bfpPour[0] = 2;
-			bfpPour[0] = 10;
-			bfpPour[0] = 5;
+			bfpPour[0] = 0.05;
+			bfpPour[0] = 0.01;
+			bfpPour[0] = 0.10;
+			bfpPour[0] = 0.15;
+			bfpPour[0] = 0.02;
+			bfpPour[0] = 0.10;
+			bfpPour[0] = 0.05;
 			/* L'etat fixe beaucoup de taxe donc on augmente le pourcentage de tax */ 
 			
 			/* Intialisation de subvention */
@@ -174,24 +174,24 @@ public class Plateau {
 			/* L etat fixe une subvention eleve */
 			
 			/* Initialisation de pourcentage d'investissement */
-			investissementPour[0] = 7;
-			investissementPour[1] = 10;
-			investissementPour[2] = 10;
-			investissementPour[3] = 7;
-			investissementPour[4] = 5;
-			investissementPour[5] = 10;
-			investissementPour[6] = 10;
-			investissementPour[7] = 10;
-			investissementPour[8] = 20;
-			investissementPour[9] = 5;
-			investissementPour[10] = 20;
-			investissementPour[11] = 5;
-			investissementPour[12] = 8;
-			investissementPour[13] = 5;
-			investissementPour[14] = 4;
-			investissementPour[15] = 5;
-			investissementPour[16] = 11;
-			investissementPour[17] = 12;
+			investissementPour[0] = 0.07;
+			investissementPour[1] = 0.10;
+			investissementPour[2] = 0.10;
+			investissementPour[3] = 0.07;
+			investissementPour[4] = 0.05;
+			investissementPour[5] = 0.10;
+			investissementPour[6] = 0.10;
+			investissementPour[7] = 0.10;
+			investissementPour[8] = 0.20;
+			investissementPour[9] = 0.05;
+			investissementPour[10] = 0.20;
+			investissementPour[11] = 0.05;
+			investissementPour[12] = 0.08;
+			investissementPour[13] = 0.05;
+			investissementPour[14] = 0.04;
+			investissementPour[15] = 0.05;
+			investissementPour[16] = 0.11;
+			investissementPour[17] = 0.12;
 			/* l etat fixe des investissement normal */
 			
 		}

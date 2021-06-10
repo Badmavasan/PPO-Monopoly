@@ -21,7 +21,7 @@ public class Etat {
 	}
 	
 	public void crediter(double sum) {
-		this.soldes_liquide = sum;
+		this.soldes_liquide = this.soldes_liquide + sum;
 	}
 	
 	public void removeInvestissementByIndice(int i) throws CaseDoesNotExistEtatInvestissement{
@@ -35,10 +35,15 @@ public class Etat {
 	
 	public void deduct(double sum) throws EtatBrokeException{
 		if(this.soldes_liquide-sum>=0) {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Etat debit");
 			this.soldes_liquide -= sum;
 		}
 		else {
 			throw new EtatBrokeException();
 		}
 	}
+	
+	public double getSoldesLiquide(){
+	    return this.soldes_liquide;
+	  }
 }

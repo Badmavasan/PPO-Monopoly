@@ -2,6 +2,7 @@ package joueurPackage;
 import exceptionPackage.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import configurationPackage.ConfigurationJeu;
@@ -83,6 +84,10 @@ public class Joueurs {
 				}
 			}
 		}
+		
+		Collections.shuffle(joueurs);
+		Collections.shuffle(joueurs);
+		Collections.shuffle(joueurs);
 	}
 	
 	public Joueurs(){

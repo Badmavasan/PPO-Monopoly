@@ -7,13 +7,13 @@ import joueurPackage.JoueurAgressif;
 import plateauPackage.*;
 
 public class CaseLoiAntitrust extends Case {
-	  protected int seuil;
+	  protected double seuil;
 
-	  public CaseLoiAntitrust(int indice,int value_seuil){
+	  public CaseLoiAntitrust(int indice,double value_seuil){
 		  super(indice);
 		  this.seuil = value_seuil;
 	  }
-	  public int getSeuil(){
+	  public double getSeuil(){
 	    return this.seuil;
 	  }
 	  
