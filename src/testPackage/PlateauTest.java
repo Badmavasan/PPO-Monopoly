@@ -1,21 +1,33 @@
 package testPackage;
 import plateauPackage.*;
+import configurationPackage.*;
 import exceptionPackage.*;
 import casePackage.*;
+import etatPackage.*;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Test;
 public class PlateauTest {
 	
 	@Test
 	public void TestNombreCasesInvesstissement() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			Plateau plat = new Plateau();
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseInvestissement){
 		    		somme = somme + 1;
@@ -29,10 +41,18 @@ public class PlateauTest {
 	
 	@Test
 	public void TestNombreCasesSubvention() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			Plateau plat = new Plateau();
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseSubvention){
 		    		somme = somme + 1;
@@ -46,10 +66,18 @@ public class PlateauTest {
 	
 	@Test
 	public void TestNombreCasesRepos() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			Plateau plat = new Plateau();
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	if(iter.next() instanceof CaseRepos){
 		    		somme = somme + 1;
@@ -63,10 +91,18 @@ public class PlateauTest {
 	
 	@Test
 	public void TestNombreCasesBureauFinancesPubliqueArgent() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			Plateau plat = new Plateau();
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	Case x = iter.next();
 		    	if(x instanceof CaseBureauFinancesPubliques){
@@ -84,10 +120,18 @@ public class PlateauTest {
 	
 	@Test
 	public void TestNombreCasesBureauFinancesPubliquePartimoine() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "NeoLiberal");
 		try{
-			Plateau plat = new Plateau();
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
 			int somme = 0;
-		    Iterator<Case> iter = plat.getCases().iterator();
+		    Iterator<Case> iter = plat.cases.iterator();
 		    while(iter.hasNext()){
 		    	Case x = iter.next();
 		    	if(x instanceof CaseBureauFinancesPubliques){
@@ -98,6 +142,35 @@ public class PlateauTest {
 		    	}
 		    }			
 			assertEquals(3,somme);
+		}catch(PlateauCreationFailedException ex){
+			throw new PlateauCreationFailedException();
+		}
+	}
+	
+	@Test
+	public void TestProfilePlateau() throws PlateauCreationFailedException{
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		invest.add(3);
+		invest.add(2);
+		invest.add(1);
+		ConfigurationJeu configs = new ConfigurationJeu(5, 5, 5000, 100000, invest, "Capitaliste");
+		try{
+			Etat etat = new Etat(configs);
+			Plateau plat = new Plateau(configs,etat);
+			boolean finding = false;
+		    Iterator<Case> iter = plat.cases.iterator();
+		    while(iter.hasNext()){
+		    	Case x = iter.next();
+		    	if(x instanceof CaseSubvention){
+		    		CaseSubvention y = (CaseSubvention) x;
+		    		if(y.getMontant()==10000){
+			    		finding = true;		    			
+		    		}
+		    	}
+		    }			
+			assertEquals(true,finding);
 		}catch(PlateauCreationFailedException ex){
 			throw new PlateauCreationFailedException();
 		}
