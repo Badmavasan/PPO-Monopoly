@@ -209,11 +209,12 @@ public class Simulation {
 	}
 	
 	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
-		
-		for(int i : indiceOfJoueursToRemove){
-			Joueur jr = joueurs.joueurs.get(i);
-			joueurs.joueurs.remove(i);
-			joueursPerdu.joueurs.add(jr);
+		if(indiceOfJoueursToRemove.size()>0) {
+			for(int i : indiceOfJoueursToRemove){
+				Joueur jr = joueurs.joueurs.get(i);
+				joueurs.joueurs.remove(i);
+				joueursPerdu.joueurs.add(jr);
+			}
 		}
 	}
 }
