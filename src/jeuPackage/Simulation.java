@@ -20,7 +20,7 @@ public class Simulation {
 			Joueurs joueurs;
 			Joueurs joueursPerdu;
 			
-			boolean cont; // continue 
+			boolean cont = true; // continue 
 			Etat etat = new Etat(configs);
 			plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
 			joueurs = new Joueurs(configs);
@@ -107,7 +107,7 @@ public class Simulation {
 				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
 			}
 			System.out.println("Etat echoue : " + etatLost);
-			
+			print_jeu(cont,etatLost,joueursPerdu,joueurs,etat);
 			/* -------------------------------------------- */
 		}catch(PlateauCreationFailedException ex){
 			System.out.println("Plateau creation has failed");
@@ -181,24 +181,24 @@ public class Simulation {
 	}
 	
 	public static void print_jeu(boolean fini, boolean etatLost, Joueurs joueursPerdus, Joueurs joueursCourants, Etat etat){
-		if(fini && etatLost){
+		if(etatLost){
 			System.out.println("Le jeu est fini, l'état a échoué !");
-		}else if (fini && !etatLost ){
-			System.out.println("Le jeu est fini, l'utilisateur a arrêté le jeu !");
-		} else {
+		}else if (fini){
 			System.out.println("Le jeu est fini !");
 			System.out.println("Gagnant : Joueur "+ joueursCourants.joueurs.get(0).getId());
+		} else {
+			System.out.println("Le jeu est fini, l'utilisateur a arrêté le jeu !");
 		}
 		System.out.println("===============");
 		System.out.println(" ");
 		System.out.println("#    Nom          Investissements   Liquide    Patrimoine");
 		for (int i=0; i<joueursCourants.joueurs.size(); i++){
-			System.out.println("1 -    Joueur"+joueursCourants.joueurs.get(i).getId()+"           "+ joueursCourants.joueurs.get(i).getSoldesInvestissement()
-					+"             "+joueursCourants.joueurs.get(i).getSoldesLiquide());
+			System.out.println("1 -    Joueur"+joueursCourants.joueurs.get(i).getId()+"\t"+ joueursCourants.joueurs.get(i).getSoldesInvestissement()
+					+"\t"+joueursCourants.joueurs.get(i).getSoldesLiquide());
 		}
 		for (int i=0; i<joueursPerdus.joueurs.size(); i++){
-			System.out.println("1 -    Joueur"+joueursPerdus.joueurs.get(i).getId()+"           "+ joueursPerdus.joueurs.get(i).getSoldesInvestissement()
-					+"             "+joueursPerdus.joueurs.get(i).getSoldesLiquide());
+			System.out.println("0 -    Joueur"+joueursPerdus.joueurs.get(i).getId()+"\t"+ joueursPerdus.joueurs.get(i).getSoldesInvestissement()
+					+"\t"+joueursPerdus.joueurs.get(i).getSoldesLiquide());
 		}
 		System.out.println("====================================================");
 		System.out.println("Etat - ");
@@ -207,6 +207,7 @@ public class Simulation {
 	}
 	
 	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
+		
 		for(int i : indiceOfJoueursToRemove){
 			Joueur jr = joueurs.joueurs.get(i);
 			joueurs.joueurs.remove(i);

@@ -20,7 +20,7 @@ public abstract class Joueur {
 
 	  /* CONSTRUCTEUR */
 	  public Joueur(double soldesLiquideDepart,int id){ // les joueurs sont par d�fault � la case 0
-	    this.indice = 1;
+	    this.position = 1;
 	    this.soldes_liquide = soldesLiquideDepart;
 	    this.investissement = new ArrayList <CaseInvestissement> ();
 	    this.id = id;
@@ -64,10 +64,10 @@ public abstract class Joueur {
 	  }
 	  
 	  public void movePlayerTo(int numberOfCases) {
-		  if(this.indice + numberOfCases > 32) {
-			  this.indice = this.indice  + numberOfCases - 32;
+		  if(this.position+ numberOfCases > 32) {
+			  this.position = this.position  + numberOfCases - 32;
 		  }else {
-			  this.indice = this.indice  + numberOfCases;
+			  this.position = this.position + numberOfCases;
 		  }
 	  }
 	  
