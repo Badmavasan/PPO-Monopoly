@@ -196,16 +196,16 @@ public class Simulation {
 		System.out.println(" ");
 		System.out.println("#\tNom          Investissements   Liquide       Patrimoine");
 		for (int i=0; i<joueursCourants.joueurs.size(); i++){
-			double sum; 
-			double liq= (double)((int)joueursCourants.joueurs.get(i).getSoldesLiquide()*100)/100;
-			double inv= (double)((int)joueursCourants.joueurs.get(i).getSoldesInvestissement()*100)/100;
+			int sum; 
+			int liq= ((int)joueursCourants.joueurs.get(i).getSoldesLiquide()*100)/100;
+			int inv= ((int)joueursCourants.joueurs.get(i).getSoldesInvestissement()*100)/100;
 			sum=liq+inv;
 			System.out.println("1 -    Joueur "+joueursCourants.joueurs.get(i).getId()+"\t\t"+ inv +"\t\t"+liq+"\t\t"+ sum);
 		}
 		for (int i=0; i<joueursPerdus.joueurs.size(); i++){
-			double sum;
-			double liq= (double)((int)joueursPerdus.joueurs.get(i).getSoldesLiquide()*100)/100;
-			double inv=(double)((int)joueursPerdus.joueurs.get(i).getSoldesInvestissement()*100)/100;
+			int sum;
+			int liq= ((int)joueursPerdus.joueurs.get(i).getSoldesLiquide()*100)/100;
+			int inv=((int)joueursPerdus.joueurs.get(i).getSoldesInvestissement()*100)/100;
 			sum=liq+inv;
 			System.out.println("0 -    Joueur "+joueursPerdus.joueurs.get(i).getId()+"\t\t"+ inv +"\t\t"+liq+"\t"+sum);
 		}
