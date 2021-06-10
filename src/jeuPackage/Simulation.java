@@ -35,10 +35,10 @@ public class Simulation {
 			int dice_value;
 			int player_current_location;
 			boolean etatLost = false;
-			List <Integer> indiceOfJoueursToRemove = new ArrayList<Integer>();
+			
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
-				
+				List <Integer> indiceOfJoueursToRemove = new ArrayList<Integer>();
 				int parcours_liste_joueurs = 0; 
 				System.out.println("--------- One tour ------------");
 				int nb_joueurs = joueurs.joueurs.size();
@@ -63,12 +63,13 @@ public class Simulation {
 						System.out.println("Case Investissement");
 						try {
 							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
+							System.out.println("Investissement added or not : " + j.debugInvestissementSize());
 						}
 						catch(JoueurNotFoundException ex) {
-							// error that should not occur
+							System.out.println("Joueur not found exception ");
 						}
 						catch(CaseDoesNotExistEtatInvestissement ex) {
-							// error that should not occur
+							System.out.println("Case does not exist exception ");
 						}
 					}
 					else if(c instanceof CaseSubvention) {
@@ -99,15 +100,15 @@ public class Simulation {
 				
 				removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove);
 				
-				System.out.println(">>>>>>>>>>>>>>>>>Etat has : " + etat.getSoldesLiquide());
+				System.out.println(">>>>>>>>>>>>>>>>> Etat has : " + etat.getSoldesLiquide());
 				System.out.println("No. of current players : " + joueurs.joueurs.size());
 				System.out.println("No. of lost players : " + joueursPerdu.joueurs.size());
-				cont = toContinue();
-				jeuFini = checkEndofGame(joueurs,cont);
+				//cont = toContinue();
+				jeuFini = checkEndofGame(joueurs/*,cont*/);
 				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
 			}
 			System.out.println("Etat echoue : " + etatLost);
-			print_jeu(cont,etatLost,joueursPerdu,joueurs,etat);
+			print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
 			/* -------------------------------------------- */
 		}catch(PlateauCreationFailedException ex){
 			System.out.println("Plateau creation has failed");
@@ -130,13 +131,13 @@ public class Simulation {
 		}
 	}
 	
-	public static boolean checkEndofGame(Joueurs joueurs, boolean cont){ 
+	public static boolean checkEndofGame(Joueurs joueurs/*, boolean cont*/){ 
 		if(joueurs.joueurs.size()==1){
 			return true;
 		}
-		else if(!cont) {
-			return true;
-		}
+//		else if(!cont) {
+//			return true;
+//		}
 		else {
 			return false;
 		}
@@ -180,15 +181,16 @@ public class Simulation {
 	    
 	}
 	
-	public static void print_jeu(boolean fini, boolean etatLost, Joueurs joueursPerdus, Joueurs joueursCourants, Etat etat){
+	public static void print_jeu(/*boolean fini, */boolean etatLost, Joueurs joueursPerdus, Joueurs joueursCourants, Etat etat){
 		if(etatLost){
 			System.out.println("Le jeu est fini, l'état a échoué !");
-		}else if (fini){
+		}else /*if (fini)*/{
 			System.out.println("Le jeu est fini !");
 			System.out.println("Gagnant : Joueur "+ joueursCourants.joueurs.get(0).getId());
-		} else {
-			System.out.println("Le jeu est fini, l'utilisateur a arrêté le jeu !");
 		}
+//		else {
+//			System.out.println("Le jeu est fini, l'utilisateur a arrêté le jeu !");
+//		}
 		System.out.println("===============");
 		System.out.println(" ");
 		System.out.println("#    Nom          Investissements   Liquide    Patrimoine");
