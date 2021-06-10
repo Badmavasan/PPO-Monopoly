@@ -36,7 +36,7 @@ public class CaseInvestissement extends Case {
 	  }
 	  
 	  public void action (Joueur j,Etat etat,Joueurs js,Joueurs joueursPerdu,int playerIndice, List <Integer> indiceOfJoueursToRemove) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
-		  if(!this.appartenanceEtat) {
+		  if(this.appartenanceEtat) {
 			  if(j instanceof JoueurAgressif) {
 				  if(j.getSoldesLiquide() > this.valeurNominale) {
 					  try {
@@ -44,7 +44,7 @@ public class CaseInvestissement extends Case {
 						  etat.crediter(this.valeurNominale);
 						  this.appartenanceEtat = false;
 						  this.appartenanceJoueur = j.getId();
-						  etat.removeInvestissementByIndice(this.indice);
+						  etat.removeInvestissementByIndice(this.indice); // ca commence a 1 les indices de cases 
 						  j.addToInvestissement(this);
 					  }catch(JoueurBrokeException ex) {
 							// remove joueur from liste principale and add to joueuersPerdu  
