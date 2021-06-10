@@ -18,22 +18,6 @@ public abstract class Joueur {
 	  // All the investments of the player is stocked in list
 	  protected List<CaseInvestissement> investissement;
 
-<<<<<<< HEAD
-	  // the action of the player in the Investissement case
-	  public abstract boolean actionInvestissement(double valeur_achat);
-
-	  // the action of the player in the Loi Antitruist case
-	  public abstract void actionAntiTrust(double max);
-
-||||||| merged common ancestors
-	  // the action of the player in the Investissement case
-	  public abstract boolean actionInvestissement(int valeur_achat);
-
-	  // the action of the player in the Loi Antitruist case
-	  public abstract void actionAntiTrust(int max);
-
-=======
->>>>>>> 5d3f8b2cfb1dbe51d21d0d524d83251d55679eaa
 	  /* CONSTRUCTEUR */
 	  public Joueur(double soldesLiquideDepart,int id){ // les joueurs sont par d�fault � la case 0
 	    this.indice = 1;

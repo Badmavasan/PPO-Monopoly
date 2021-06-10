@@ -92,13 +92,6 @@ public class CaseInvestissement extends Case {
 			  }
 		  }
 	  }
-<<<<<<< HEAD
-
-	@Override
-	public int compareTo(CaseInvestissement o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	public boolean getAppartenanceEtat(){
 		return this.appartenanceEtat;
@@ -107,15 +100,4 @@ public class CaseInvestissement extends Case {
 	public int getAppartenanceJoueur(){
 		return this.appartenanceJoueur;
 	}
-	}
-||||||| merged common ancestors
-
-	@Override
-	public int compareTo(CaseInvestissement o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-=======
->>>>>>> 5d3f8b2cfb1dbe51d21d0d524d83251d55679eaa
-	  
 }

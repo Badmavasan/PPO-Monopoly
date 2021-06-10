@@ -89,8 +89,6 @@ public class Simulation {
 							// errror that should not occur 
 						}
 					}
-					System.out.println("No. of current players : " + joueurs.joueurs.size());
-					System.out.println("No. of lost players : " + joueursPerdu.joueurs.size());
 					if(joueurs.joueurs.size()<total_nb_joueurs) {
 						parcours_liste_joueurs = parcours_liste_joueurs + 1 -1;
 					}else {
@@ -101,8 +99,10 @@ public class Simulation {
 					}
 				}
 				System.out.println(">>>>>>>>>>>>>>>>>Etat has : " + etat.getSoldesLiquide());
+				System.out.println("No. of current players : " + joueurs.joueurs.size());
+				System.out.println("No. of lost players : " + joueursPerdu.joueurs.size());
 				cont = toContinue();
-				jeuFini = checkEndofGame(joueurs,cont,etat);
+				jeuFini = checkEndofGame(joueurs,cont);
 				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
 			}
 			System.out.println("Etat echoue : " + etatLost);
@@ -119,19 +119,23 @@ public class Simulation {
 		char cont;
 		System.out.println("Voulez vous continuer le jeu [Y/N] : ");
 		cont = sc.next().charAt(0);
-		if(cont=='Y' || cont =='y') {
-			return true;
-		}else {
+		if(cont=='N' || cont !='n') {
 			return false;
+		}else {
+			return true;
 		}
 	}
 	
-	public static boolean checkEndofGame(Joueurs joueurs, boolean cont,Etat etat){ 
-		boolean condition1 = false;
+	public static boolean checkEndofGame(Joueurs joueurs, boolean cont){ 
 		if(joueurs.joueurs.size()==1){
-			condition1 = true;
+			return true;
 		}
-		return condition1 && cont;
+		else if(!cont) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public static ConfigurationJeu menu(){

@@ -23,13 +23,10 @@ public class Etat {
 	public void crediter(double sum) {
 		this.soldes_liquide = this.soldes_liquide + sum;
 	}
-<<<<<<< HEAD
 	
 	public List<CaseInvestissement> getList (){
 		return this.investissement;
 	}
-||||||| merged common ancestors
-=======
 	
 	public void removeInvestissementByIndice(int i) throws CaseDoesNotExistEtatInvestissement{
 		try {
@@ -53,5 +50,4 @@ public class Etat {
 	public double getSoldesLiquide(){
 	    return this.soldes_liquide;
 	  }
->>>>>>> 5d3f8b2cfb1dbe51d21d0d524d83251d55679eaa
 }
