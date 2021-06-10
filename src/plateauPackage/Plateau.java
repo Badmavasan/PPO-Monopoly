@@ -152,7 +152,7 @@ public class Plateau {
 			/* l etat fixe des investissement normal */
 			
 		}
-		else if(configs.getProfile().equals("Capitaliste")) {
+		else if(configs.getProfile().equals("Progressiste")) {
 			
 			/* Initialisation des lois anti Trust */ 
 			atVal[0] = 3500;

@@ -32,8 +32,8 @@ public class CaseLoiAntitrust extends Case {
 			  }else {
 				  int i = j.getIndiceMaxInvestissement().getIndice();
 				  try {
-					  j.removeInvestissementByIndice(i);
 					  etat.addToInvestissement(j.getIndiceMinInvestissement());
+					  j.removeInvestissementByIndice(i);
 					  ((CaseInvestissement)plateau.cases.get(i-1)).investissementBackToEtat();
 				  }
 				  catch(CaseDoesNotExistEtatInvestissement ex) {
