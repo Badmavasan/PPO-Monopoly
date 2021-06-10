@@ -9,9 +9,10 @@ import joueurPackage.*;
 public class CaseInvestissement extends Case {
 	  protected boolean appartenanceEtat;
 	  /* Indice du tableau joueurs auquel caseInvestissemnt appartient. Si �a appartient � l�tat alors cela est �gal � -1 */
-	  protected int appartenanceJoueur; 
+	  protected int appartenanceJoueur;
+	  /*valeur correspondant au coût que représente la case*/
 	  protected double valeurNominale;
-	  /* la valeur de benefice est compris entre 0 et 100 : c'est une porcentage */
+	  /* la valeur de benefice est compris entre 0 et 100 : c'est une pourcentage */
 	  protected double benefice;
 	  
 	  public CaseInvestissement(int indice, int valNom, double benef) {
