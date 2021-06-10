@@ -1,5 +1,7 @@
 package casePackage;
 
+import java.util.List;
+
 import etatPackage.Etat;
 import exceptionPackage.*;
 import joueurPackage.*;
@@ -33,7 +35,7 @@ public class CaseInvestissement extends Case {
 		  this.appartenanceJoueur = -1;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs js,Joueurs joueursPerdu,int playerIndice) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
+	  public void action (Joueur j,Etat etat,Joueurs js,Joueurs joueursPerdu,int playerIndice, List <Integer> indiceOfJoueursToRemove) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
 		  if(!this.appartenanceEtat) {
 			  if(j instanceof JoueurAgressif) {
 				  if(j.getSoldesLiquide() > this.valeurNominale) {
@@ -46,9 +48,7 @@ public class CaseInvestissement extends Case {
 						  j.addToInvestissement(this);
 					  }catch(JoueurBrokeException ex) {
 							// remove joueur from liste principale and add to joueuersPerdu  
-							Joueur jr = js.joueurs.get(j.getId()-1);
-							js.joueurs.remove(j.getId()-1);
-							joueursPerdu.joueurs.add(jr);
+							indiceOfJoueursToRemove.add(playerIndice);
 					  }
 				  }
 			  }
@@ -65,9 +65,7 @@ public class CaseInvestissement extends Case {
 						}
 						catch(JoueurBrokeException ex) {
 							// remove joueur from liste principale and add to joueuersPerdu  
-							Joueur jr = js.joueurs.get(j.getId()-1);
-							js.joueurs.remove(j.getId()-1);
-							joueursPerdu.joueurs.add(jr);
+							indiceOfJoueursToRemove.add(playerIndice);
 						}
 						catch(CaseDoesNotExistEtatInvestissement ex) {
 							throw new CaseDoesNotExistEtatInvestissement();
@@ -83,9 +81,7 @@ public class CaseInvestissement extends Case {
 			  }
 			  catch(JoueurBrokeException ex) {
 					// remove joueur from liste principale and add to joueuersPerdu  
-					Joueur jr = js.joueurs.get(playerIndice);
-					js.joueurs.remove(playerIndice);
-					joueursPerdu.joueurs.add(jr);
+				  indiceOfJoueursToRemove.add(playerIndice);
 			  }
 			  catch(JoueurNotFoundException ex){
 				  throw new JoueurNotFoundException();

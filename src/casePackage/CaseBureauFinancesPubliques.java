@@ -2,6 +2,9 @@ package casePackage;
 
 import exceptionPackage.JoueurBrokeException;
 import joueurPackage.*;
+
+import java.util.List;
+
 import etatPackage.*;
 
 public class CaseBureauFinancesPubliques extends Case{
@@ -27,7 +30,7 @@ public class CaseBureauFinancesPubliques extends Case{
 		  return this.taxArgent;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs joueurs,Joueurs joueursPerdu,int parcours_joueurs_liste) {
+	  public void action (Joueur j,Etat etat,Joueurs joueurs,Joueurs joueursPerdu,int parcours_joueurs_liste, List <Integer> indiceOfJoueursToRemove) {
 			double tax;
 			if(this.taxArgent) {
 				tax = this.impotPercentage*j.getSoldesLiquide();
@@ -40,9 +43,7 @@ public class CaseBureauFinancesPubliques extends Case{
 			}
 			catch(JoueurBrokeException ex) {
 				// remove joueur from liste principale and add to joueuersPerdu  
-				Joueur jr = joueurs.joueurs.get(parcours_joueurs_liste); // joueur id starts at 1
-				joueurs.joueurs.remove(parcours_joueurs_liste);
-				joueursPerdu.joueurs.add(jr);
+				indiceOfJoueursToRemove.add(parcours_joueurs_liste);
 			}
 	  }
 }

@@ -32,17 +32,17 @@ public class Simulation {
 			
 			/*------------------ DEBUT JEU ---------------- */
 			boolean jeuFini = false;
-			int total_nb_joueurs = joueurs.joueurs.size();
 			int dice_value;
 			int player_current_location;
 			boolean etatLost = false;
+			List <Integer> indiceOfJoueursToRemove = new ArrayList<Integer>();
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
 				
 				int parcours_liste_joueurs = 0; 
 				System.out.println("--------- One tour ------------");
-				
-				while(parcours_liste_joueurs < joueurs.joueurs.size() && !etatLost && !jeuFini) {
+				int nb_joueurs = joueurs.joueurs.size();
+				while(parcours_liste_joueurs <  nb_joueurs && !etatLost) {
 					
 					dice_value = getRandomNumberUsingNextInt(1, 6);
 					System.out.println("Nombres de joueurs au depart de chaque boucle : " + joueurs.joueurs.size());
@@ -51,16 +51,18 @@ public class Simulation {
 					joueurs.joueurs.get(parcours_liste_joueurs).movePlayerTo(dice_value);
 					player_current_location = joueurs.joueurs.get(parcours_liste_joueurs).getPosition();
 					Case c = plateau.cases.get(player_current_location-1);
+					
 					Joueur j = joueurs.joueurs.get(parcours_liste_joueurs);
+					
 					if(c instanceof CaseBureauFinancesPubliques) {
 						System.out.println("Case Bureau Finances Publiques");
-						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu,parcours_liste_joueurs);
+						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
 						System.out.println("Tax paying Etat after tax " + etat.getSoldesLiquide());
 					}
 					else if(c instanceof CaseInvestissement) {
 						System.out.println("Case Investissement");
 						try {
-							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs);
+							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
 						}
 						catch(JoueurNotFoundException ex) {
 							// error that should not occur
@@ -89,15 +91,14 @@ public class Simulation {
 							// errror that should not occur 
 						}
 					}
-					if(joueurs.joueurs.size()<total_nb_joueurs) {
-						parcours_liste_joueurs = parcours_liste_joueurs + 1 -1;
-					}else {
-						parcours_liste_joueurs = parcours_liste_joueurs + 1;
-					}
-					if(joueurs.joueurs.size()==1) {
-						jeuFini = true;
-					}
+					parcours_liste_joueurs = parcours_liste_joueurs + 1;
+//					if(joueurs.joueurs.size()==1) {
+//						jeuFini = true;
+//					}
 				}
+				
+				removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove);
+				
 				System.out.println(">>>>>>>>>>>>>>>>>Etat has : " + etat.getSoldesLiquide());
 				System.out.println("No. of current players : " + joueurs.joueurs.size());
 				System.out.println("No. of lost players : " + joueursPerdu.joueurs.size());
@@ -106,6 +107,7 @@ public class Simulation {
 				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
 			}
 			System.out.println("Etat echoue : " + etatLost);
+			
 			/* -------------------------------------------- */
 		}catch(PlateauCreationFailedException ex){
 			System.out.println("Plateau creation has failed");
@@ -119,10 +121,12 @@ public class Simulation {
 		char cont;
 		System.out.println("Voulez vous continuer le jeu [Y/N] : ");
 		cont = sc.next().charAt(0);
-		if(cont=='N' || cont !='n') {
+		if(cont=='N' || cont =='n') {
 			return false;
-		}else {
+		}else if(cont=='Y' || cont=='y'){
 			return true;
+		}else {
+			return false;
 		}
 	}
 	
@@ -174,5 +178,12 @@ public class Simulation {
 	    Random random = new Random();
 	    return random.nextInt(max - min) + min;
 	}
-
+	
+	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
+		for(int i : indiceOfJoueursToRemove){
+			Joueur jr = joueurs.joueurs.get(i);
+			joueurs.joueurs.remove(i);
+			joueursPerdu.joueurs.add(jr);
+		}
+	}
 }
