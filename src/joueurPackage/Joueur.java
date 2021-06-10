@@ -8,7 +8,7 @@ public abstract class Joueur {
 
 	  // the indice is the location of the player in the board 
 	  // The first place is initialized as 0
-	  protected int indice;
+	  protected int position;
 	  
 	  protected int id;
 
@@ -40,7 +40,7 @@ public abstract class Joueur {
 	  }
 	  
 	  public int getPosition() {
-		  return this.indice;
+		  return this.position;
 	  }
 	  public void deduct(double sumToDeduct) throws JoueurBrokeException{
 	    if(this.soldes_liquide - sumToDeduct>0){

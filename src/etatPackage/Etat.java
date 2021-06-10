@@ -50,4 +50,13 @@ public class Etat {
 	public double getSoldesLiquide(){
 	    return this.soldes_liquide;
 	  }
+	
+	public double getSoldesInvestissement(){
+	    double somme = 0;
+	    Iterator<CaseInvestissement> iter = investissement.iterator();
+	    while(iter.hasNext()){
+	      somme = somme + iter.next().getValeurNominale();
+	    }
+	    return somme;
+	  }
 }

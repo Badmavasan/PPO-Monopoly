@@ -173,6 +173,33 @@ public class Simulation {
 	public static int getRandomNumberUsingNextInt(int min, int max) {
 	    Random random = new Random();
 	    return random.nextInt(max - min) + min;
+	    
+	}
+	
+	public static void print_jeu(boolean fini, boolean etatLost, Joueurs joueursPerdus, Joueurs joueursCourants, Etat etat){
+		if(fini && etatLost){
+			System.out.println("Le jeu est fini, l'état a échoué !");
+		}else if (fini && !etatLost ){
+			System.out.println("Le jeu est fini, l'utilisateur a arrêté le jeu !");
+		} else {
+			System.out.println("Le jeu est fini !");
+			System.out.println("Gagnant : Joueur "+ joueursCourants.joueurs.get(0).getId());
+		}
+		System.out.println("===============");
+		System.out.println(" ");
+		System.out.println("#    Nom          Investissements   Liquide    Patrimoine");
+		for (int i=0; i<joueursCourants.joueurs.size(); i++){
+			System.out.println("1 -    Joueur"+joueursCourants.joueurs.get(i).getId()+"           "+ joueursCourants.joueurs.get(i).getSoldesInvestissement()
+					+"             "+joueursCourants.joueurs.get(i).getSoldesLiquide());
+		}
+		for (int i=0; i<joueursPerdus.joueurs.size(); i++){
+			System.out.println("1 -    Joueur"+joueursPerdus.joueurs.get(i).getId()+"           "+ joueursPerdus.joueurs.get(i).getSoldesInvestissement()
+					+"             "+joueursPerdus.joueurs.get(i).getSoldesLiquide());
+		}
+		System.out.println("====================================================");
+		System.out.println("Etat - ");
+		System.out.println("       Investissements:"+ etat.getSoldesInvestissement());
+		System.out.println("       Liquide: "+ etat.getSoldesLiquide());
 	}
 
 }
