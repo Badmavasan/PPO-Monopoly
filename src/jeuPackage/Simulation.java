@@ -193,12 +193,14 @@ public class Simulation {
 		System.out.println(" ");
 		System.out.println("#    Nom          Investissements   Liquide    Patrimoine");
 		for (int i=0; i<joueursCourants.joueurs.size(); i++){
+			double sum= joueursCourants.joueurs.get(i).getSoldesLiquide()+joueursCourants.joueurs.get(i).getSoldesInvestissement();
 			System.out.println("1 -    Joueur"+joueursCourants.joueurs.get(i).getId()+"\t"+ joueursCourants.joueurs.get(i).getSoldesInvestissement()
-					+"\t"+joueursCourants.joueurs.get(i).getSoldesLiquide());
+					+"\t"+joueursCourants.joueurs.get(i).getSoldesLiquide()+"\t\t"+ sum);
 		}
 		for (int i=0; i<joueursPerdus.joueurs.size(); i++){
+			double sum= joueursPerdus.joueurs.get(i).getSoldesLiquide()+joueursPerdus.joueurs.get(i).getSoldesInvestissement();
 			System.out.println("0 -    Joueur"+joueursPerdus.joueurs.get(i).getId()+"\t"+ joueursPerdus.joueurs.get(i).getSoldesInvestissement()
-					+"\t"+joueursPerdus.joueurs.get(i).getSoldesLiquide());
+					+"\t"+joueursPerdus.joueurs.get(i).getSoldesLiquide()+"\t\t"+sum);
 		}
 		System.out.println("====================================================");
 		System.out.println("Etat - ");
