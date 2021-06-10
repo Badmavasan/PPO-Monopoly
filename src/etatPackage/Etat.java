@@ -11,4 +11,8 @@ public class Etat {
 		soldes_liquide=solde;
 		investissement=liste;
 	}
+	
+	public List<CaseInvestissement> getList (){
+		return this.investissement;
+	}
 }

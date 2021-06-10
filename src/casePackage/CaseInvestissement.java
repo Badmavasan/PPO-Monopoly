@@ -33,5 +33,14 @@ public class CaseInvestissement extends Case implements Comparable<CaseInvestiss
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public boolean getAppartenanceEtat(){
+		return this.appartenanceEtat;
+	}
+	
+	public int getAppartenanceJoueur(){
+		return this.appartenanceJoueur;
+	}
+	}
 	  
 }

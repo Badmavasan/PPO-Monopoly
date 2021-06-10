@@ -11,7 +11,7 @@ public class JoueurPrudent extends Joueur{
 	    this.investMax=val;
 	  }
 	
-	public boolean actionInvestissement(int valeur_achat){
+	public boolean actionInvestissement(double valeur_achat){
 		boolean achete =false;
 		if(investissement.size() < investMax && valeur_achat < 0.20*soldes_liquide ){
 			achete=true;
@@ -21,7 +21,7 @@ public class JoueurPrudent extends Joueur{
 		return achete;
 	  }
 
-	  public void actionAntiTrust(int max){
+	  public void actionAntiTrust(double max){
 		  while (this.getSoldesInvestissement()>max){
 			  this.investissement.remove(Collections.max(investissement));
 		 }

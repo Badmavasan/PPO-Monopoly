@@ -8,7 +8,7 @@ public class JoueurAgressif extends Joueur{
 	    super(soldes_liq_dep);
 	  }
 	  
-	  public boolean actionInvestissement(int valeur_achat){
+	  public boolean actionInvestissement(double valeur_achat){
 		boolean achete =false;
 		if(this.soldes_liquide>valeur_achat){
 			achete=true;
@@ -18,7 +18,7 @@ public class JoueurAgressif extends Joueur{
 		return achete;
 	  }
 	  
-	  public void actionAntiTrust(int max){
+	  public void actionAntiTrust(double max){
 		  while (this.getSoldesInvestissement()>max){
 			  this.investissement.remove(Collections.min(investissement));
 		 }

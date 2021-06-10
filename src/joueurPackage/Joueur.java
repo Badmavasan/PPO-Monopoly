@@ -17,10 +17,10 @@ public abstract class Joueur {
 	  protected List<CaseInvestissement> investissement;
 
 	  // the action of the player in the Investissement case
-	  public abstract boolean actionInvestissement(int valeur_achat);
+	  public abstract boolean actionInvestissement(double valeur_achat);
 
 	  // the action of the player in the Loi Antitruist case
-	  public abstract void actionAntiTrust(int max);
+	  public abstract void actionAntiTrust(double max);
 
 	  /* CONSTRUCTEUR */
 	  public Joueur(double soldesLiquideDepart){ // les joueurs sont par d�fault � la case 0
@@ -33,8 +33,8 @@ public abstract class Joueur {
 	    return this.soldes_liquide;
 	  }
 
-	  public int getSoldesInvestissement(){
-	    int somme = 0;
+	  public double getSoldesInvestissement(){
+	    double somme = 0;
 	    Iterator<CaseInvestissement> iter = investissement.iterator();
 	    while(iter.hasNext()){
 	      somme = somme + iter.next().getValeurNominale();
@@ -45,7 +45,7 @@ public abstract class Joueur {
 	  public int getPosition() {
 		  return this.indice;
 	  }
-	  public void deduct(int sumToDeduct) throws JoueurBrokeException{
+	  public void deduct(double sumToDeduct) throws JoueurBrokeException{
 	    if(this.soldes_liquide - sumToDeduct>0){
 	      this.soldes_liquide = this.soldes_liquide - sumToDeduct;
 	    }else{
@@ -53,7 +53,7 @@ public abstract class Joueur {
 	    }
 	  }
 
-	  public void transferTo(Joueur player2,int transferValue)throws JoueurBrokeException{
+	  public void transferTo(Joueur player2,double transferValue)throws JoueurBrokeException{
 	    try{
 	      this.deduct(transferValue);
 	      player2.credit(transferValue);
@@ -62,7 +62,7 @@ public abstract class Joueur {
 	    }
 	  }
 
-	  public void credit(int value){
+	  public void credit(double value){
 	    this.soldes_liquide = this.soldes_liquide + value;
 	  }
 	  

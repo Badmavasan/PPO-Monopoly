@@ -4,6 +4,18 @@ import etatPackage.*;
 import casePackage.*;
 
 public class main{
+	void printJeu (Etat etat_jeu){
+		for(int i=0; i<etat_jeu.getList().size();i++){
+			if(etat_jeu.getList().get(i).getAppartenanceEtat() == true){
+				System.out.println("La case" + etat_jeu.getList().get(i).getIndice()+ "appartient à l'état");
+			}else{
+				System.out.println("Le joueur " + etat_jeu.getList().get(i).getAppartenanceJoueur() +" dispose de " + 
+			    etat_jeu.getList().get(i).getAppartenanceJoueur().getSoldesLiquide()+
+			    " et se trouve à la case numéro " + etat_jeu.getList().get(i).getIndice());
+			}
+		}
+	}
+		
 	int main(){
 		int joueurs_agressifs=0;
 		int joueurs_prudents=0;
@@ -44,6 +56,10 @@ public class main{
 		}*/
 		//List<CaseInvestissement> liste_cases;
 		//Etat etat= new Etat(capital_etat, liste_cases);
+		
+		/*
+		 
+		 */
 		return 0;
 }
 }
