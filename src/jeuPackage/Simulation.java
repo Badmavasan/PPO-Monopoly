@@ -1,3 +1,7 @@
+/*
+ * C'est le fichier principal, c'est le fichier qui contient le main du projet.
+ * Le pseudo code de cette algorithm est disponible dans le rapport final 
+ */
 package jeuPackage;
 import configurationPackage.*;
 import exceptionPackage.*;
@@ -12,29 +16,50 @@ public class Simulation {
 	static Scanner sc = new Scanner (System.in); // opening scanner
 	
 	public static void main(String[] args) {
-		/* ----------------------- INITIALISATION DE JOUEURS ET PLATEAU EN FONCTION DE CONFIGURATION ------------------------- */
 		try{
-			ConfigurationJeu configs = menu();
+			/* ----------------------- INITIALISATION DE JOUEURS | PLATEAU | ETAT EN FONCTION DE CONFIGURATION ------------------------- */
 			
+			ConfigurationJeu configs = menu();
 			Plateau plateau;
 			Joueurs joueurs;
-			Joueurs joueursPerdu;
-			
-			boolean cont = true; // continue 
+			Joueurs joueursPerdu;	
 			Etat etat = new Etat(configs);
 			plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
 			joueurs = new Joueurs(configs);
 			
+			/*----------------------------------------------------------------------------------------------------------------------------*/
 			
-			/*----- INITIALISATION DE JOUEURS PERDU ------- */
+			/*------------------------------------ INITIALISATION DE JOUEURS PERDU ------------------------------------------------------ */
+			
 			joueursPerdu = new Joueurs();
-			/* -------------------------------------------- */
 			
-			/*------------------ DEBUT JEU ---------------- */
-			boolean jeuFini = false;
+			/*----------------------------------------------------------------------------------------------------------------------------*/
+			
+			/*----------------------------------------------------- DEBUT JEU ---------------------------------------------------------- */
+			
+			/* JeuFini est une variable qui est definie pour verifie si le jeu a terminer
+			 * Cela verifie 2 conditions :
+			 * Condition 1 : S'il reste plus qu'un joueur
+			 * Condition 2 : Si l'utilisateur veut continuer la simulation
+			 */
+			boolean jeuFini = false; 
+			/*
+			 * La variable DiceValuer est la valuer compris entre 1 et 6 aleatoire 
+			 */
 			int dice_value;
+			/*
+			 * Comme on a une boucle while, on utilise la variable player_current_location pour trouver l'indice de la case de joueur, 
+			 * On utilise cela pour trouver la nature de case
+			 */
 			int player_current_location;
+			/*
+			 * La variable determine si l'etat a echoue ou pas 
+			 */
 			boolean etatLost = false;
+			/*
+			 * La variable stocke le choixe d'utilisateur de soit continuer la simulation ou arreter la simulation
+			 */
+			boolean cont = true;
 			
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
@@ -93,9 +118,6 @@ public class Simulation {
 						}
 					}
 					parcours_liste_joueurs = parcours_liste_joueurs + 1;
-//					if(joueurs.joueurs.size()==1) {
-//						jeuFini = true;
-//					}
 				}
 				
 				removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove);
@@ -143,6 +165,13 @@ public class Simulation {
 		}
 	}
 	
+	/*
+	 * La fonction permet de intialiser la configuration du jeu en fonction des donnees de l'utilisateur
+	 * Donnees : clavier
+	 * @param : ne prend pas de paramteres
+	 * @return : Un objet ConfigurationJeu
+	 */
+	
 	public static ConfigurationJeu menu(){
 		int joueurs_agressifs = 0;
 		int joueurs_prudents = 0;
@@ -156,7 +185,7 @@ public class Simulation {
 		if(profile.equals("Capitaliste")) {
 			System.out.println("Choisissez le nombre de joueurs agressifs : ");
 			joueurs_agressifs = sc.nextInt();
-			joueurs_prudents = 0;
+			joueurs_prudents = 0; // on intialise a 0 donc on n a pas besoin de tester 
 		}else {
 			System.out.println("Choisissez le nombre de joueurs agressifs : ");
 			joueurs_agressifs = sc.nextInt();
@@ -175,11 +204,28 @@ public class Simulation {
 		return config;
 	}
 	
+	/*
+	 * La fonction permet de generer un entier entre 1 et 6 : cela ressemble a notre de 
+	 * @param1 : min pour generer un entier superieur a cette valeur 
+	 * @param2 : max pour generer un entier inferieur a cette valeur
+	 * @return un entier compris entre 1 et 6 
+	 * 
+	 *  STATIC : cela est une fonction static propre a cette classe comme on l'utilise pas aupauvravant 
+	 */
+	
 	public static int getRandomNumberUsingNextInt(int min, int max) {
 	    Random random = new Random();
 	    return random.nextInt(max - min) + min;
 	    
 	}
+	
+	/*
+	 * La fonction permet d'afficher la fin du jeu : On a adapter la fin du jeu comme indique dans l ennonce 
+	 * @param1 : fini : Boolean : qui permet de savoir si c'est l'utilisateur qui a arreter la simulation. Donc si l'utilisateur arrret le jeu, fini est true sinon false
+	 * @param2 : etatLost : Boolean : permet de savoir si l'etat a echoue : true si l'etat a echoue ou false sinnon
+	 * le jeu se termine en 3 cas : ces deux represente 2 cas, sinon l'autre condition a laquelle cette fonction est appele est quand il reste plus qu'un joueur
+	 * Cela permet de savoir pourquoi ca s'arrete
+	 */
 	
 	public static void print_jeu(/*boolean fini, */boolean etatLost, Joueurs joueursPerdus, Joueurs joueursCourants, Etat etat){
 		if(etatLost){
@@ -214,6 +260,15 @@ public class Simulation {
 		System.out.println("       Liquide: "+ etat.getSoldesLiquide());
 	}
 
+	/*
+	 * La fonction permet de supprimer les joeuurs de la liste joueuers
+	 * Cette fonction est appele a la fin de chaque tour 
+	 * @param1 : liste joueurs
+	 * @param2 : liste de joueurs perdu (une fois qu'on supprime les joueurs de la liste joueurs, on l ajoute dans la liste joueurs perdu)
+	 * @param3 : liste d'indice des joeuurs a supprimer de la liste joueurs
+	 * ---------- cette liste est genere a l'interieur de la boucle quand il y a joueurBrokeException --------------------------------
+	 * @return : void   
+	 */
 	
 	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
 		if(indiceOfJoueursToRemove.size()>0) {

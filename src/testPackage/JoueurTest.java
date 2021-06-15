@@ -1,3 +1,8 @@
+/*
+ * Dans cette classe on test tout les methodes de joueur : crediter, debiter, tranfer d'argent (dans le cas de case investissement)
+ * deplacer le joueur, initialisation de liste de joueurs, initalisation des joeurs en cas de profile NeoLiberal (difference de soldes liquides de depart entre joueur agressif et prudent)
+ * intialisation des joeueurs en cas de profile Capitaliste : pas besoin cf Simulation ou on initialise capitaliste dans la fonction menu()
+ */
 package testPackage;
 import static org.junit.Assert.*;
 
@@ -19,9 +24,18 @@ public class JoueurTest {
 
 	 @Test
 	  public void joueurcreditTest(){
-		JoueurAgressif player = new JoueurAgressif(5000,1);
-	    player.credit(5000);
-	    assertEquals(player.getSoldesLiquide(),10000,0);
+		 /*--------------------------- INITIALISATION -------------------------------------- */
+		 
+		 JoueurAgressif player = new JoueurAgressif(5000,1);
+	    
+		 /*----------------------------------------------------------------------------------*/
+		 
+		 player.credit(5000);
+		 
+		 /*----------------------------------------------------------------------------------*/
+		 
+		 assertEquals(player.getSoldesLiquide(),10000,0);
+		 /*------------------- ASSERT EQUALS THAT SHOULD WORK --------------------------------------- */
 	  }
 
 	  @Test
@@ -88,7 +102,6 @@ public class JoueurTest {
 	  }
 	  
 	  @Test
-	  
 	  public void joueursInitByProfileTest() throws JoueurListCreationFailedException{
 		  List<Integer> invest = new ArrayList<Integer>();
 			invest.add(5);
