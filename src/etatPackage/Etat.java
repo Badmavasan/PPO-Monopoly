@@ -11,15 +11,18 @@ public class Etat {
 
 	protected List<CaseInvestissement> investissement; // indice des cases
 	
+	//constructeur
 	public Etat(ConfigurationJeu configs){
 		soldes_liquide = configs.getCapitalEtat();
 		investissement = new ArrayList<CaseInvestissement>();
 	}
 	
+	//rajoute la case investissement à la liste d'investissements de l'état
 	public void addToInvestissement(CaseInvestissement c) {
 		this.investissement.add(c);
 	}
 	
+	//rajoute la valeur sum au total de soldes liquide de l'état
 	public void crediter(double sum) {
 		this.soldes_liquide = this.soldes_liquide + sum;
 	}
