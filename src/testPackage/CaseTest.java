@@ -150,7 +150,7 @@ public class CaseTest {
 	}
 	
 	@Test
-	public void caseLoiAntitrustTest() throws PlateauCreationFailedException, JoueurListCreationFailedException, JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
+	public void caseLoiAntitrustTest() throws PlateauCreationFailedException, JoueurListCreationFailedException, JoueurNotFoundException, CaseDoesNotExistEtatInvestissement, PlayerHasNoInvestissementException {
 		/*--------------------------- INITIALISATION -------------------------------------- */
 		
 		List<Integer> invest = new ArrayList<Integer>();

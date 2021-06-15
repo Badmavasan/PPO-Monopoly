@@ -88,7 +88,6 @@ public class Simulation {
 						System.out.println("Case Investissement");
 						try {
 							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
-							System.out.println("Investissement added or not : " + j.debugInvestissementSize());
 						}
 						catch(JoueurNotFoundException ex) {
 							System.out.println("Joueur not found exception ");
@@ -115,6 +114,9 @@ public class Simulation {
 						}
 						catch(CaseDoesNotExistEtatInvestissement ex) {
 							// errror that should not occur 
+						}
+						catch(PlayerHasNoInvestissementException ex) {
+							// error that should not occur
 						}
 					}
 					parcours_liste_joueurs = parcours_liste_joueurs + 1;

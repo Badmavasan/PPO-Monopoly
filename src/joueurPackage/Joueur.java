@@ -83,36 +83,28 @@ public abstract class Joueur {
 			this.investissement.add(c);
 	  }
 	  
-	  public void removeInvestissementByIndice(int i) throws CaseDoesNotExistEtatInvestissement{
-			boolean found = false;
-			int indice = 0;
-			System.out.println("DEbug findd the errorr of i to remove : " + i + "where as investissement taille  : " + investissement.size());
-			while(!found && indice<investissement.size()) {
-				System.out.println("debug");
-				 if(investissement.get(indice).getIndice()==i) {
-					 found = true;
-				 }
-				 indice ++;
-			} // liste commence a 0 mais la numerotation commence a partir de 1
-			if(found) {
-				investissement.remove(indice-1);
-			}
-			else {
+	  public void removeInvestissement(CaseInvestissement c) throws CaseDoesNotExistEtatInvestissement{
+			boolean remove = investissement.remove(c);
+			if(!remove) {
 				throw new CaseDoesNotExistEtatInvestissement();
 			}
 		}
 	  
-	  public CaseInvestissement getIndiceMinInvestissement() {
-		  CaseInvestissement rep = Collections.min(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
-		  return rep;
+	  public CaseInvestissement getMinInvestissement() throws PlayerHasNoInvestissementException{
+		  try {
+			  CaseInvestissement rep = Collections.min(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
+			  return rep;
+		  }catch(NoSuchElementException ex) {
+			  throw new PlayerHasNoInvestissementException();
+		  }
 	  }
 	  
-	  public CaseInvestissement getIndiceMaxInvestissement() {
-		  CaseInvestissement rep = Collections.max(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
-		  return rep;
-	  }
-	  
-	  public int debugInvestissementSize() {
-		  return this.investissement.size();
+	  public CaseInvestissement getMaxInvestissement() throws PlayerHasNoInvestissementException{
+		  try {	  
+		  	  CaseInvestissement rep = Collections.max(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
+			  return rep;
+		  }catch(NoSuchElementException ex) {
+			  throw new PlayerHasNoInvestissementException();
+		  }
 	  }
 }

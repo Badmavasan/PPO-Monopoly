@@ -12,9 +12,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import casePackage.CaseInvestissement;
 import configurationPackage.ConfigurationJeu;
 import exceptionPackage.JoueurBrokeException;
 import exceptionPackage.JoueurListCreationFailedException;
+import exceptionPackage.PlayerHasNoInvestissementException;
 import joueurPackage.Joueur;
 import joueurPackage.JoueurAgressif;
 import joueurPackage.JoueurPrudent;
@@ -127,5 +129,77 @@ public class JoueurTest {
 			  
 		  }
 	  }
-
+	  
+	  @Test
+	  public void joueurPrudentMinMaxInvestissemtTest() throws PlayerHasNoInvestissementException {
+		  CaseInvestissement c1 = new CaseInvestissement(1, 80000, 0.5);
+		  CaseInvestissement c2 = new CaseInvestissement(2, 50000, 0.5);
+		  
+		  JoueurPrudent player1 = new JoueurPrudent(5000,10,1);
+		  player1.addToInvestissement(c1);
+		  player1.addToInvestissement(c2);
+		  try {
+			  CaseInvestissement rep1 = player1.getMaxInvestissement();
+        	  assertEquals(rep1,c1);
+        	  CaseInvestissement rep2 = player1.getMinInvestissement();
+    		  assertEquals(rep2,c2);
+		  }catch(PlayerHasNoInvestissementException ex){
+			  throw new PlayerHasNoInvestissementException();
+		  }		  
+	  }
+	  
+	  @Test(expected=PlayerHasNoInvestissementException.class)
+	  public void joueurPrudentMinMaxInvestissemtExceptionTest() throws PlayerHasNoInvestissementException {
+		  CaseInvestissement c1 = new CaseInvestissement(1, 80000, 0.5);
+		  CaseInvestissement c2 = new CaseInvestissement(2, 50000, 0.5);
+		  
+		  JoueurPrudent player1 = new JoueurPrudent(5000,10,1);
+		  try {
+			  CaseInvestissement rep1 = player1.getMaxInvestissement();
+        	  assertEquals(rep1,c1);
+        	  CaseInvestissement rep2 = player1.getMinInvestissement();
+    		  assertEquals(rep2,c2);
+		  }catch(PlayerHasNoInvestissementException ex){
+			  throw new PlayerHasNoInvestissementException();
+		  }	  
+	  }
+	  
+	  @Test
+	  public void joueurAgressifMinMaxInvestissemtTest() throws PlayerHasNoInvestissementException {
+		  CaseInvestissement c1 = new CaseInvestissement(1, 80000, 0.5);
+		  CaseInvestissement c2 = new CaseInvestissement(2, 50000, 0.5);
+		  
+		  JoueurAgressif player1 = new JoueurAgressif(5000,1);
+		  player1.addToInvestissement(c1);
+		  player1.addToInvestissement(c2);
+		  try {
+			  CaseInvestissement rep1 = player1.getMaxInvestissement();
+        	  assertEquals(rep1,c1);
+        	  CaseInvestissement rep2 = player1.getMinInvestissement();
+    		  assertEquals(rep2,c2);
+		  }catch(PlayerHasNoInvestissementException ex){
+			  throw new PlayerHasNoInvestissementException();
+		  }		  
+	  }
+	  
+	  @Test(expected=PlayerHasNoInvestissementException.class)
+	  public void joueurAgressifMinMaxInvestissemtExceptionTest() throws PlayerHasNoInvestissementException {
+		  CaseInvestissement c1 = new CaseInvestissement(1, 80000, 0.5);
+		  CaseInvestissement c2 = new CaseInvestissement(2, 50000, 0.5);
+		  
+		  JoueurAgressif player1 = new JoueurAgressif(5000,1);
+		  try {
+			  CaseInvestissement rep1 = player1.getMaxInvestissement();
+        	  assertEquals(rep1,c1);
+        	  CaseInvestissement rep2 = player1.getMinInvestissement();
+    		  assertEquals(rep2,c2);
+		  }catch(PlayerHasNoInvestissementException ex){
+			  throw new PlayerHasNoInvestissementException();
+		  }	  
+	  }
+	  
+	  @Test
+	  public void joueurRemoveInvestissementTest() {
+		  
+	  }
 }
