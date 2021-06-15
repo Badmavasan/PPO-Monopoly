@@ -1,7 +1,10 @@
 package joueurPackage;
 import casePackage.*;
+import etatPackage.Etat;
+
 import java.util.*;
 import exceptionPackage.*;
+import plateauPackage.Plateau;
 
 public abstract class Joueur {
 	/* ATTRIBUTS */
@@ -19,7 +22,7 @@ public abstract class Joueur {
 	  protected List<CaseInvestissement> investissement;
 
 	  /* CONSTRUCTEUR */
-	  public Joueur(double soldesLiquideDepart,int id){ // les joueurs sont par d�fault � la case 0
+	  public Joueur(double soldesLiquideDepart,int id){ // les joueurs sont par default a la case 0
 	    this.position = 1;
 	    this.soldes_liquide = soldesLiquideDepart;
 	    this.investissement = new ArrayList <CaseInvestissement> ();
@@ -83,28 +86,32 @@ public abstract class Joueur {
 			this.investissement.add(c);
 	  }
 	  
-	  public void removeInvestissement(CaseInvestissement c) throws CaseDoesNotExistEtatInvestissement{
+	  public void removeInvestissement(CaseInvestissement c) throws PlayerInvestissementException{
 			boolean remove = investissement.remove(c);
 			if(!remove) {
-				throw new CaseDoesNotExistEtatInvestissement();
+				throw new PlayerInvestissementException();
 			}
 		}
 	  
-	  public CaseInvestissement getMinInvestissement() throws PlayerHasNoInvestissementException{
+	  public CaseInvestissement getMinInvestissement() throws PlayerInvestissementException{
 		  try {
 			  CaseInvestissement rep = Collections.min(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
 			  return rep;
 		  }catch(NoSuchElementException ex) {
-			  throw new PlayerHasNoInvestissementException();
+			  throw new PlayerInvestissementException();
 		  }
 	  }
 	  
-	  public CaseInvestissement getMaxInvestissement() throws PlayerHasNoInvestissementException{
+	  public CaseInvestissement getMaxInvestissement() throws PlayerInvestissementException{
 		  try {	  
 		  	  CaseInvestissement rep = Collections.max(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
 			  return rep;
 		  }catch(NoSuchElementException ex) {
-			  throw new PlayerHasNoInvestissementException();
+			  throw new PlayerInvestissementException();
 		  }
 	  }
+	  
+	  public abstract void actionInvestissement(CaseInvestissement c,int playerIndice,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException;
+	  
+	  public abstract void actionLoiAntiTrust(Etat etat,Plateau plateau) throws PlayerInvestissementException;
 }

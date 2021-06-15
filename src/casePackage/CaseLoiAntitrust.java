@@ -2,9 +2,8 @@ package casePackage;
 
 import etatPackage.Etat;
 import exceptionPackage.CaseDoesNotExistEtatInvestissement;
-import exceptionPackage.PlayerHasNoInvestissementException;
+import exceptionPackage.PlayerInvestissementException;
 import joueurPackage.Joueur;
-import joueurPackage.JoueurAgressif;
 import plateauPackage.*;
 
 public class CaseLoiAntitrust extends Case {
@@ -17,29 +16,10 @@ public class CaseLoiAntitrust extends Case {
 	  public double getSeuil(){
 	    return this.seuil;
 	  }
-	  
-	  public void action (Joueur j,Etat etat,Plateau plateau) throws CaseDoesNotExistEtatInvestissement, PlayerHasNoInvestissementException {
+
+	  public void action (Joueur j,Etat etat,Plateau plateau) throws CaseDoesNotExistEtatInvestissement, PlayerInvestissementException {
 		  if(j.getSoldesInvestissement()>seuil) {
-			  CaseInvestissement toRemove = j.getMinInvestissement();
-			  if(j instanceof JoueurAgressif) {
-				  try {
-					  etat.addToInvestissement(toRemove);
-					  j.removeInvestissement(toRemove);
-					  ((CaseInvestissement)plateau.cases.get(toRemove.getIndice()-1)).investissementBackToEtat();
-				  }
-				  catch(CaseDoesNotExistEtatInvestissement ex) {
-					  throw new CaseDoesNotExistEtatInvestissement();
-				  }
-			  }else {
-				  try {
-					  etat.addToInvestissement(toRemove);
-					  j.removeInvestissement(toRemove);
-					  ((CaseInvestissement)plateau.cases.get(toRemove.getIndice()-1)).investissementBackToEtat();
-				  }
-				  catch(CaseDoesNotExistEtatInvestissement ex) {
-					  throw new CaseDoesNotExistEtatInvestissement();
-				  }
-			  }
+			  j.actionLoiAntiTrust(etat, plateau);
 		  }
 	  }
 }

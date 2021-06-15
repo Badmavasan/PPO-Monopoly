@@ -23,6 +23,14 @@ public class CaseInvestissement extends Case {
 		  this.appartenanceJoueur = -1;
 	  }
 	  
+	  public void setAppartenanceJoueur(int player) {
+		  this.appartenanceJoueur = player;
+	  }
+	  
+	  public void setAppartenanceEtat(boolean setValue) {
+		  this.appartenanceEtat = setValue;
+	  }
+	  
 	  public double getValeurNominale() {
 		  return this.valeurNominale;
 	  }
@@ -36,56 +44,19 @@ public class CaseInvestissement extends Case {
 		  this.appartenanceJoueur = -1;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs js,Joueurs joueursPerdu,int playerIndice, List <Integer> indiceOfJoueursToRemove) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
+	  public void action (Joueur j,Etat etat,Joueurs joueurs,int playerIndice, List <Joueur> indiceOfJoueursToRemove) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
 		  if(this.appartenanceEtat) {
-			  if(j instanceof JoueurAgressif) {
-				  if(j.getSoldesLiquide() > this.valeurNominale) {
-					  try {
-						  j.deduct(this.valeurNominale);
-						  etat.crediter(this.valeurNominale);
-						  this.appartenanceEtat = false;
-						  this.appartenanceJoueur = j.getId();
-						  etat.removeInvestissementByIndice(this.indice); // ca commence a 1 les indices de cases 
-						  j.addToInvestissement(this);
-					  }catch(JoueurBrokeException ex) {
-							// remove joueur from liste principale and add to joueuersPerdu  
-							indiceOfJoueursToRemove.add(playerIndice);
-					  }
-				  }
-			  }
-			  else {
-				  if(j.getInvestissement().size() < ((JoueurPrudent) j).getInvestMax() && this.valeurNominale < 0.20*j.getSoldesLiquide()){
-						try {
-							j.deduct(this.valeurNominale);
-							etat.crediter(this.valeurNominale);
-							this.appartenanceEtat = false;
-							this.appartenanceJoueur = j.getId();
-							etat.removeInvestissementByIndice(this.indice);
-							j.addToInvestissement(this);
-							//modifier l'etat de la case + ajouter la case a la liste de soldeInvestissement
-						}
-						catch(JoueurBrokeException ex) {
-							// remove joueur from liste principale and add to joueuersPerdu  
-							indiceOfJoueursToRemove.add(playerIndice);
-						}
-						catch(CaseDoesNotExistEtatInvestissement ex) {
-							throw new CaseDoesNotExistEtatInvestissement();
-						}
-					}
-			  }
+			  j.actionInvestissement(this, playerIndice, etat, joueurs, indiceOfJoueursToRemove);
 		  }
 		  else {
 			  double benef = this.benefice*this.valeurNominale;
 			  try {
 				  j.deduct(benef);
-				  js.getJoueurById(this.appartenanceJoueur).credit(benef);
+				  joueurs.getJoueurById(this.appartenanceJoueur).credit(benef);
 			  }
 			  catch(JoueurBrokeException ex) {
-					// remove joueur from liste principale and add to joueuersPerdu  
-				  indiceOfJoueursToRemove.add(playerIndice);
-			  }
-			  catch(JoueurNotFoundException ex){
-				  throw new JoueurNotFoundException();
+				  // remove joueur from liste principale and add to joueuersPerdu  
+				  indiceOfJoueursToRemove.add(j);
 			  }
 		  }
 	  }

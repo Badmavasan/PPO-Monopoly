@@ -17,10 +17,6 @@ public class CaseBureauFinancesPubliques extends Case{
 		  this.impotPercentage = impotPer;
 		  this.taxArgent = typeTax;
 	  }
-	  
-	  public void setImpotPercentage(int valImpotPercentage){
-	    this.impotPercentage = valImpotPercentage;
-	  }
 
 	  public double getImpotPercentage(){
 	    return this.impotPercentage;
@@ -30,7 +26,7 @@ public class CaseBureauFinancesPubliques extends Case{
 		  return this.taxArgent;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs joueurs,Joueurs joueursPerdu,int parcours_joueurs_liste, List <Integer> indiceOfJoueursToRemove) {
+	  public void action (Joueur j,Etat etat,Joueurs joueurs,Joueurs joueursPerdu,int parcours_joueurs_liste, List <Joueur> indiceOfJoueursToRemove) {
 			double tax;
 			if(this.taxArgent) {
 				tax = this.impotPercentage*j.getSoldesLiquide();
@@ -43,7 +39,7 @@ public class CaseBureauFinancesPubliques extends Case{
 			}
 			catch(JoueurBrokeException ex) {
 				// remove joueur from liste principale and add to joueuersPerdu  
-				indiceOfJoueursToRemove.add(parcours_joueurs_liste);
+				indiceOfJoueursToRemove.add(j);
 			}
 	  }
 }

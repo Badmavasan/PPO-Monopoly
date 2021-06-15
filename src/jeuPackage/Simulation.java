@@ -63,7 +63,7 @@ public class Simulation {
 			
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
-				List <Integer> indiceOfJoueursToRemove = new ArrayList<Integer>();
+				List <Joueur> indiceOfJoueursToRemove = new ArrayList<Joueur>();
 				int parcours_liste_joueurs = 0; 
 				System.out.println("--------- One tour ------------");
 				int nb_joueurs = joueurs.joueurs.size();
@@ -87,7 +87,7 @@ public class Simulation {
 					else if(c instanceof CaseInvestissement) {
 						System.out.println("Case Investissement");
 						try {
-							((CaseInvestissement) c).action(j, etat, joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
+							((CaseInvestissement) c).action(j, etat, joueurs,parcours_liste_joueurs,indiceOfJoueursToRemove);
 						}
 						catch(JoueurNotFoundException ex) {
 							System.out.println("Joueur not found exception ");
@@ -115,7 +115,7 @@ public class Simulation {
 						catch(CaseDoesNotExistEtatInvestissement ex) {
 							// errror that should not occur 
 						}
-						catch(PlayerHasNoInvestissementException ex) {
+						catch(PlayerInvestissementException ex) {
 							// error that should not occur
 						}
 					}
@@ -272,12 +272,11 @@ public class Simulation {
 	 * @return : void   
 	 */
 	
-	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List <Integer> indiceOfJoueursToRemove) {
+	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List<Joueur> indiceOfJoueursToRemove) {
 		if(indiceOfJoueursToRemove.size()>0) {
-			for(int i : indiceOfJoueursToRemove){
-				Joueur jr = joueurs.joueurs.get(i);
+			for(Joueur i : indiceOfJoueursToRemove){
 				joueurs.joueurs.remove(i);
-				joueursPerdu.joueurs.add(jr);
+				joueursPerdu.joueurs.add(i);
 			}
 		}
 	}

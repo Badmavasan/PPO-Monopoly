@@ -138,7 +138,7 @@ public class EtatTest {
 		etat.addToInvestissement(c);
 		assertEquals(etat.getList().size(),1,0); //vérification qu'elle a bien été ajoutée
 		try{
-			etat.removeInvestissementByIndice(0);
+			etat.removeInvestissement(c);
 		}catch (CaseDoesNotExistEtatInvestissement ex){
 			throw new CaseDoesNotExistEtatInvestissement();
 		}
@@ -164,10 +164,9 @@ public class EtatTest {
 		
 		/*-----------------Nouvelle Case à ajouter puis retirer------------*/
 		CaseInvestissement c = new CaseInvestissement(0,200,20.0);
-		etat.addToInvestissement(c);
 		//assertEquals(etat.getList().size(),1,0); //vérification qu'elle a bien été ajoutée
 		try{
-			etat.removeInvestissementByIndice(1);
+			etat.removeInvestissement(c);
 		}catch (CaseDoesNotExistEtatInvestissement ex){
 			throw new CaseDoesNotExistEtatInvestissement();
 		}
