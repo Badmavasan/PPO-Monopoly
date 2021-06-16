@@ -194,6 +194,48 @@ public class Plateau {
 			investissementPour[17] = 0.12;
 			/* l etat fixe des investissement normal */
 			
+		}else if(configs.getProfile().equals("Covid")) {
+			
+			/* Initialisation des lois anti Trust */ 
+			atVal[0] = 1000;
+			atVal[1] = 4000;
+			/* L'etat defini des lois d'antitrust normal */ 
+			
+			/* Intialisation des pourcentages de taxes */
+			bfpPour[0] = 0.005;
+			bfpPour[0] = 0.01;
+			bfpPour[0] = 0.05;
+			bfpPour[0] = 0.05;
+			bfpPour[0] = 0.02;
+			bfpPour[0] = 0.01;
+			bfpPour[0] = 0.05;
+			/* Pas beaucoup de Tax */ 
+			
+			/* Intialisation de subvention */
+			sub = 100000;
+			/* L etat fixe une subvention eleve */
+			
+			/* Initialisation de pourcentage d'investissement */
+			investissementPour[0] = 0.07;
+			investissementPour[1] = 0.40;
+			investissementPour[2] = 0.40;
+			investissementPour[3] = 0.07;
+			investissementPour[4] = 0.05;
+			investissementPour[5] = 0.10;
+			investissementPour[6] = 0.50;
+			investissementPour[7] = 0.10;
+			investissementPour[8] = 0.20;
+			investissementPour[9] = 0.05;
+			investissementPour[10] = 0.30;
+			investissementPour[11] = 0.15;
+			investissementPour[12] = 0.18;
+			investissementPour[13] = 0.15;
+			investissementPour[14] = 0.14;
+			investissementPour[15] = 0.15;
+			investissementPour[16] = 0.11;
+			investissementPour[17] = 0.12;
+			/* l etat fixe des investissement un peu plsu eleve que normal */
+			
 		}
 		
 		int[] investissementVal = {400000,70,540,730,1300,5340,5340,70,100,1000,5000,4300,100,400000,5000,400000,10000,730};

@@ -152,7 +152,7 @@ public class Simulation {
 		double capital_etat = 0;
 		List<Integer> invest = new ArrayList<Integer>();
 		String profile;
-		System.out.println("Il y a 4 types du jeu NeoLiberal, Socialiste, Capitaliste, Progressiste");
+		System.out.println("Il y a 4 types du jeu NeoLiberal, Socialiste, Capitaliste, Progressiste,Covid");
 		System.out.println("Entrez le profile du jeu (Utiliser le meme facon qu'au dessus) : ");
 		profile = sc.nextLine();
 		if(profile.equals("Capitaliste")) {
