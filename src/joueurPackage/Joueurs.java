@@ -94,21 +94,13 @@ public class Joueurs {
 		joueurs = new ArrayList<Joueur>();
 	}
 	
-	public Joueur getJoueurById(int id) throws JoueurNotFoundException {
-		boolean found = false;
-		int parcours =0;
-		while(!found && parcours<this.joueurs.size()) {
-			if(this.joueurs.get(parcours).getId()==id) {
-				found = true;
-			}
-			parcours ++;
-		}
-		if(found) {
-			parcours--;
-			return this.joueurs.get(parcours);
-		}else {
+	public int getJoueurById(Joueur j) throws JoueurNotFoundException {
+		int indice = this.joueurs.indexOf(j);
+		if(indice == -1) {
+			System.out.println("DEbug : " + j.getId());
 			throw new JoueurNotFoundException();
+		}else {
+			return indice;
 		}
-		
 	}
 }

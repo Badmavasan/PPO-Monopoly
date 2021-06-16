@@ -13,6 +13,7 @@ public class CaseLoiAntitrust extends Case {
 		  super(indice);
 		  this.seuil = value_seuil;
 	  }
+	  
 	  public double getSeuil(){
 	    return this.seuil;
 	  }

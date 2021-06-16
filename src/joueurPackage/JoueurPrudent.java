@@ -6,7 +6,6 @@ import casePackage.CaseInvestissement;
 import etatPackage.Etat;
 import exceptionPackage.CaseDoesNotExistEtatInvestissement;
 import exceptionPackage.JoueurBrokeException;
-import exceptionPackage.JoueurNotFoundException;
 import exceptionPackage.PlayerInvestissementException;
 import plateauPackage.Plateau;
 
@@ -23,13 +22,13 @@ public class JoueurPrudent extends Joueur{
 		return this.investMax;
 	}
 	
-	public void actionInvestissement(CaseInvestissement c,int playerIndice,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException {
+	public void actionInvestissement(CaseInvestissement c,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement{
 		if(this.getInvestissement().size() < this.investMax && c.getValeurNominale() < 0.20*this.soldes_liquide){
 			try {
 				this.deduct(c.getValeurNominale());
 				etat.crediter(c.getValeurNominale());
 				c.setAppartenanceEtat(false);
-				c.setAppartenanceJoueur(this.getId());
+				c.setAppartenanceJoueur(this);
 				etat.removeInvestissement(c); // ca commence a 1 les indices de cases 
 				this.addToInvestissement(c);
 			}

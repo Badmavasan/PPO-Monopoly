@@ -6,7 +6,6 @@ import casePackage.CaseInvestissement;
 import etatPackage.Etat;
 import exceptionPackage.CaseDoesNotExistEtatInvestissement;
 import exceptionPackage.JoueurBrokeException;
-import exceptionPackage.JoueurNotFoundException;
 import exceptionPackage.PlayerInvestissementException;
 import plateauPackage.Plateau;
 
@@ -15,13 +14,13 @@ public class JoueurAgressif extends Joueur{
 	    super(soldes_liq_dep,id);
 	  }
 
-	public void actionInvestissement(CaseInvestissement c,int playerIndice,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException {
+	public void actionInvestissement(CaseInvestissement c,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement {
 		if(this.getSoldesLiquide() > c.getValeurNominale()) {
 			  try {
 				  this.deduct(c.getValeurNominale());
 				  etat.crediter(c.getValeurNominale());
 				  c.setAppartenanceEtat(false);
-				  c.setAppartenanceJoueur(this.getId());
+				  c.setAppartenanceJoueur(this);
 				  etat.removeInvestissement(c); // ca commence a 1 les indices de cases 
 				  this.addToInvestissement(c);
 			  }catch(JoueurBrokeException ex) {

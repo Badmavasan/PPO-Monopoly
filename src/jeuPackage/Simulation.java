@@ -64,14 +64,11 @@ public class Simulation {
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
 				List <Joueur> indiceOfJoueursToRemove = new ArrayList<Joueur>();
-				int parcours_liste_joueurs = 0; 
-				System.out.println("--------- One tour ------------");
+				int parcours_liste_joueurs = 0;
 				int nb_joueurs = joueurs.joueurs.size();
 				while(parcours_liste_joueurs <  nb_joueurs && !etatLost) {
 					
 					dice_value = getRandomNumberUsingNextInt(1, 6);
-					System.out.println("Nombres de joueurs au depart de chaque boucle : " + joueurs.joueurs.size());
-					System.out.println("parcours joueurs : " + parcours_liste_joueurs);
 
 					joueurs.joueurs.get(parcours_liste_joueurs).movePlayerTo(dice_value);
 					player_current_location = joueurs.joueurs.get(parcours_liste_joueurs).getPosition();
@@ -80,14 +77,11 @@ public class Simulation {
 					Joueur j = joueurs.joueurs.get(parcours_liste_joueurs);
 					
 					if(c instanceof CaseBureauFinancesPubliques) {
-						System.out.println("Case Bureau Finances Publiques");
 						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
-						System.out.println("Tax paying Etat after tax " + etat.getSoldesLiquide());
 					}
 					else if(c instanceof CaseInvestissement) {
-						System.out.println("Case Investissement");
 						try {
-							((CaseInvestissement) c).action(j, etat, joueurs,parcours_liste_joueurs,indiceOfJoueursToRemove);
+							((CaseInvestissement) c).action(j, etat, joueurs,indiceOfJoueursToRemove);
 						}
 						catch(JoueurNotFoundException ex) {
 							System.out.println("Joueur not found exception ");
@@ -97,7 +91,6 @@ public class Simulation {
 						}
 					}
 					else if(c instanceof CaseSubvention) {
-						System.out.println("Case Subvention");
 						try {
 						 ((CaseSubvention)c).action(j, etat);
 						}
@@ -108,7 +101,6 @@ public class Simulation {
 						}
 					}
 					else if(c instanceof CaseLoiAntitrust) {
-						System.out.println("Case Loi Anti Trust ");
 						try {
 							((CaseLoiAntitrust)c).action(j,etat,plateau);
 						}
@@ -121,17 +113,15 @@ public class Simulation {
 					}
 					parcours_liste_joueurs = parcours_liste_joueurs + 1;
 				}
+				try {
+					removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove,etat,plateau);
+				}catch(CaseDoesNotExistException ex) {
+					// not to occur
+				}
 				
-				removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove);
-				
-				System.out.println(">>>>>>>>>>>>>>>>> Etat has : " + etat.getSoldesLiquide());
-				System.out.println("No. of current players : " + joueurs.joueurs.size());
-				System.out.println("No. of lost players : " + joueursPerdu.joueurs.size());
 				//cont = toContinue();
 				jeuFini = checkEndofGame(joueurs/*,cont*/);
-				System.out.println(" >>>>>>>>>>>>>>>>JeuFini Verif : " + jeuFini);
 			}
-			System.out.println("Etat echoue : " + etatLost);
 			print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
 			/* -------------------------------------------- */
 		}catch(PlateauCreationFailedException ex){
@@ -272,10 +262,11 @@ public class Simulation {
 	 * @return : void   
 	 */
 	
-	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List<Joueur> indiceOfJoueursToRemove) {
+	public static void removeJoueurPerdu(Joueurs joueurs,Joueurs joueursPerdu,List<Joueur> indiceOfJoueursToRemove,Etat etat,Plateau plateau) throws CaseDoesNotExistException {
 		if(indiceOfJoueursToRemove.size()>0) {
 			for(Joueur i : indiceOfJoueursToRemove){
 				joueurs.joueurs.remove(i);
+				i.transferInvestissemntBackToEtat(etat,plateau);
 				joueursPerdu.joueurs.add(i);
 			}
 		}

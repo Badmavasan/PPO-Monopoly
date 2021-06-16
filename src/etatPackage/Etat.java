@@ -33,7 +33,6 @@ public class Etat {
 	
 	public void deduct(double sum) throws EtatBrokeException{
 		if(this.soldes_liquide-sum>=0) {
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Etat debit");
 			this.soldes_liquide -= sum;
 		}
 		else {
@@ -46,12 +45,12 @@ public class Etat {
 	  }
 	
 	public double getSoldesInvestissement(){
-	    double somme = 0;
-	    Iterator<CaseInvestissement> iter = investissement.iterator();
-	    while(iter.hasNext()){
-	      somme = somme + iter.next().getValeurNominale();
-	    }
-	    return somme;
+		return this.investissement.stream().filter(o -> o.getValeurNominale() > 10).mapToDouble(CaseInvestissement::getValeurNominale).sum();
+		/*
+		 * double somme = 0; Iterator<CaseInvestissement> iter =
+		 * investissement.iterator(); while(iter.hasNext()){ somme = somme +
+		 * iter.next().getValeurNominale(); } return somme;
+		 */
 	  }
 	
 	public void removeInvestissement(CaseInvestissement c) throws CaseDoesNotExistEtatInvestissement{

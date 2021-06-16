@@ -215,4 +215,5 @@ public class JoueurTest {
 		  player1.removeInvestissement(c1);
 		  assertEquals(0, player1.getInvestissement().size());
 	  }
+	   
 }

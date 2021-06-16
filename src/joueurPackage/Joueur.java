@@ -29,28 +29,57 @@ public abstract class Joueur {
 	    this.id = id;
 	  }
 
+	  /* Getters */
+	  public int getId() {
+		  return this.id;
+	  }
+	  
 	  public double getSoldesLiquide(){
 	    return this.soldes_liquide;
 	  }
 
 	  public double getSoldesInvestissement(){
-	    double somme = 0;
-	    Iterator<CaseInvestissement> iter = investissement.iterator();
-	    while(iter.hasNext()){
-	      somme = somme + iter.next().getValeurNominale();
-	    }
-	    return somme;
+		  return this.investissement.stream().filter(o -> o.getValeurNominale() > 10).mapToDouble(CaseInvestissement::getValeurNominale).sum();
+//	    double somme = 0;
+//	    Iterator<CaseInvestissement> iter = investissement.iterator();
+//	    while(iter.hasNext()){
+//	      somme = somme + iter.next().getValeurNominale();
+//	    }
+//	    return somme;
 	  }
 	  
 	  public int getPosition() {
 		  return this.position;
 	  }
+	  
+	  public List<CaseInvestissement> getInvestissement(){
+		  return this.investissement;
+	  }
+	  
 	  public void deduct(double sumToDeduct) throws JoueurBrokeException{
 	    if(this.soldes_liquide - sumToDeduct>0){
 	      this.soldes_liquide = this.soldes_liquide - sumToDeduct;
 	    }else{
 	      throw new JoueurBrokeException();
 	    }
+	  }
+	  
+	  public CaseInvestissement getMinInvestissement() throws PlayerInvestissementException{
+		  try {
+			  CaseInvestissement rep = Collections.min(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
+			  return rep;
+		  }catch(NoSuchElementException ex) {
+			  throw new PlayerInvestissementException();
+		  }
+	  }
+	  
+	  public CaseInvestissement getMaxInvestissement() throws PlayerInvestissementException{
+		  try {	  
+		  	  CaseInvestissement rep = Collections.max(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
+			  return rep;
+		  }catch(NoSuchElementException ex) {
+			  throw new PlayerInvestissementException();
+		  }
 	  }
 
 	  public void transferTo(Joueur player2,double transferValue)throws JoueurBrokeException{
@@ -74,14 +103,6 @@ public abstract class Joueur {
 		  }
 	  }
 	  
-	  public int getId() {
-		  return this.id;
-	  }
-	  
-	  public List<CaseInvestissement> getInvestissement(){
-		  return this.investissement;
-	  }
-	  
 	  public void addToInvestissement(CaseInvestissement c) {
 			this.investissement.add(c);
 	  }
@@ -91,27 +112,24 @@ public abstract class Joueur {
 			if(!remove) {
 				throw new PlayerInvestissementException();
 			}
-		}
+	  }
 	  
-	  public CaseInvestissement getMinInvestissement() throws PlayerInvestissementException{
-		  try {
-			  CaseInvestissement rep = Collections.min(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
-			  return rep;
-		  }catch(NoSuchElementException ex) {
-			  throw new PlayerInvestissementException();
+	  public void transferInvestissemntBackToEtat(Etat etat,Plateau plateau)throws CaseDoesNotExistException {
+		  if(this.investissement.size()>0) {
+			  for(CaseInvestissement i : this.investissement) {
+				  int indice = plateau.cases.indexOf(i);
+				  if(indice == -1) {
+					  throw new CaseDoesNotExistException();
+				  }
+				  else {
+					  ((CaseInvestissement)plateau.cases.get(indice)).investissementBackToEtat();
+					  etat.addToInvestissement(i);
+				  }  
+			  }
 		  }
 	  }
 	  
-	  public CaseInvestissement getMaxInvestissement() throws PlayerInvestissementException{
-		  try {	  
-		  	  CaseInvestissement rep = Collections.max(this.investissement,Comparator.comparing(s-> s.getValeurNominale()));
-			  return rep;
-		  }catch(NoSuchElementException ex) {
-			  throw new PlayerInvestissementException();
-		  }
-	  }
-	  
-	  public abstract void actionInvestissement(CaseInvestissement c,int playerIndice,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException;
+	  public abstract void actionInvestissement(CaseInvestissement c,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement;
 	  
 	  public abstract void actionLoiAntiTrust(Etat etat,Plateau plateau) throws PlayerInvestissementException;
 }

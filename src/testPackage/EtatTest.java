@@ -121,7 +121,7 @@ public class EtatTest {
 	}
 	
 	@Test 
-	public void removeInvestissementByIndiceTest() throws CaseDoesNotExistEtatInvestissement {
+	public void removeInvestissementTest() throws CaseDoesNotExistEtatInvestissement {
 		/*--------------------------- INITIALISATION -------------------------------------- */
 		
 		List<Integer> invest = new ArrayList<Integer>();
@@ -150,7 +150,7 @@ public class EtatTest {
 	}
 	
 	@Test(expected=CaseDoesNotExistEtatInvestissement.class)
-	public void removeInvestissementByIndiceExceptionTest() throws CaseDoesNotExistEtatInvestissement {
+	public void removeInvestissementExceptionTest() throws CaseDoesNotExistEtatInvestissement {
 		/*--------------------------- INITIALISATION -------------------------------------- */
 		
 		List<Integer> invest = new ArrayList<Integer>();
@@ -165,11 +165,7 @@ public class EtatTest {
 		/*-----------------Nouvelle Case à ajouter puis retirer------------*/
 		CaseInvestissement c = new CaseInvestissement(0,200,20.0);
 		//assertEquals(etat.getList().size(),1,0); //vérification qu'elle a bien été ajoutée
-		try{
-			etat.removeInvestissement(c);
-		}catch (CaseDoesNotExistEtatInvestissement ex){
-			throw new CaseDoesNotExistEtatInvestissement();
-		}
+		etat.removeInvestissement(c);
 		/*----------------------------------------------------------------------------------*/
 
 		/*------------------- SHOULD THROW EXCEPTION  -------------------------------*/

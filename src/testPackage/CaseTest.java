@@ -49,12 +49,51 @@ public class CaseTest {
 		/*----------------------------------------------------------------------------------*/
 		
 		try{
-			c.action(j, etat, joueurs,1,indiceOfJouersToRemove);
+			c.action(j, etat, joueurs,indiceOfJouersToRemove);
 			assertEquals(0, j.getInvestissement().size()); // on fait get(0) car l investissemtn est stocke dans la premiere indice 
 			/*------------------- ASSERT EQUALS THAT SHOULD NOT WORK ----------------------------------- */
 			
-			c2.action(j2, etat, joueurs,1,indiceOfJouersToRemove);
+			c2.action(j2, etat, joueurs,indiceOfJouersToRemove);
 			assertEquals(c2.getValeurNominale(),j2.getInvestissement().get(0).getValeurNominale(),0);
+			/*------------------- ASSERT EQUALS THAT SHOULD WORK --------------------------------------- */
+		}
+		catch(JoueurNotFoundException ex) {
+			throw new JoueurNotFoundException();
+		}catch(CaseDoesNotExistEtatInvestissement ex){
+			throw new CaseDoesNotExistEtatInvestissement();
+		}
+	}
+	
+	@Test
+	public void caseInvestissementPayAnotherPlayerTest() throws PlateauCreationFailedException, JoueurListCreationFailedException, JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
+		/*--------------------------- INITIALISATION -------------------------------------- */
+		
+		List<Integer> invest = new ArrayList<Integer>();
+		invest.add(5);
+		invest.add(4);
+		ConfigurationJeu configs = new ConfigurationJeu(2, 2, 50000000, 100000, invest, "Capitaliste");
+		Etat etat = new Etat(configs);
+		Plateau plateau = new Plateau(configs,etat); 
+		Joueurs joueurs = new Joueurs(configs); // on l'initialise meme si ce n'est pas necessaire car on en a besoin pour la methode action de la classe
+		List<Joueur> indiceOfJouersToRemove = new ArrayList<Joueur>(); // on en a besoin si jamais le joeuur n a pas d'argent 
+		/*----------------------------------------------------------------------------------*/
+		
+		Joueur j = joueurs.joueurs.get(1);  // on prend un joueur 
+		j.movePlayerTo(1); // on positionne un joueuer dans une case investissement
+		CaseInvestissement c = (CaseInvestissement) plateau.cases.get(1); // on prend la case Investissemtn dans le quel le joueur est present 
+		
+		Joueur j2 = joueurs.joueurs.get(2);  // on prend un joueur 
+		
+		/*----------------------------------------------------------------------------------*/
+		
+		try{
+			c.action(j, etat, joueurs,indiceOfJouersToRemove);
+			assertEquals(1, j.getInvestissement().size());
+			j2.movePlayerTo(1); 
+			/*------------------- ASSERT EQUALS THAT SHOULD NOT WORK ----------------------------------- */
+			double soldesBeforeTransaction = j2.getSoldesLiquide();
+			c.action(j2, etat, joueurs,indiceOfJouersToRemove);
+			assertEquals(soldesBeforeTransaction-c.getBenefice()*c.getValeurNominale(),j2.getSoldesLiquide(),0);
 			/*------------------- ASSERT EQUALS THAT SHOULD WORK --------------------------------------- */
 		}
 		catch(JoueurNotFoundException ex) {
@@ -169,7 +208,7 @@ public class CaseTest {
 		CaseInvestissement c2 = new CaseInvestissement(2, 80000, 0.5); // on initialise une case avec indice 2 car dans le plateauy a l indice 2 on a une case investissemnt, de plus on utilise pas directemet celui du p[lateau car on veut une valeur nominale de la case plus petit 
 		etat.addToInvestissement(c2); // on ajoute la case investissemnt au joueur 
 		int nbCaseInvestissement = etat.getList().size(); // on stocke le nombre de case investissement avant de enlever une case 
-		c2.action(j, etat, joueurs,1,indiceOfJouersToRemove); // on ajoute la case au joueur , il a assez d argent donc ca passe 
+		c2.action(j, etat, joueurs,indiceOfJouersToRemove); // on ajoute la case au joueur , il a assez d argent donc ca passe 
 		c.action(j, etat, plateau); // on fait l action de loi anti trust aui doit eliminer la case 
 		
 		/*----------------------------------------------------------------------------------*/

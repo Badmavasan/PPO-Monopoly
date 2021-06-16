@@ -9,7 +9,7 @@ import joueurPackage.*;
 public class CaseInvestissement extends Case {
 	  protected boolean appartenanceEtat;
 	  /* Indice du tableau joueurs auquel caseInvestissemnt appartient. Si �a appartient � l�tat alors cela est �gal � -1 */
-	  protected int appartenanceJoueur;
+	  protected Joueur appartenanceJoueur;
 	  /*valeur correspondant au coût que représente la case*/
 	  protected double valeurNominale;
 	  /* la valeur de benefice est compris entre 0 et 100 : c'est une pourcentage */
@@ -20,10 +20,10 @@ public class CaseInvestissement extends Case {
 		  this.valeurNominale = valNom;
 		  this.benefice = benef;
 		  this.appartenanceEtat = true;
-		  this.appartenanceJoueur = -1;
+		  this.appartenanceJoueur = null;
 	  }
 	  
-	  public void setAppartenanceJoueur(int player) {
+	  public void setAppartenanceJoueur(Joueur player) {
 		  this.appartenanceJoueur = player;
 	  }
 	  
@@ -41,18 +41,17 @@ public class CaseInvestissement extends Case {
 	  
 	  public void investissementBackToEtat() {
 		  this.appartenanceEtat = true;
-		  this.appartenanceJoueur = -1;
+		  this.appartenanceJoueur = null;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs joueurs,int playerIndice, List <Joueur> indiceOfJoueursToRemove) throws JoueurNotFoundException, CaseDoesNotExistEtatInvestissement {
+	  public void action (Joueur j,Etat etat,Joueurs joueurs, List <Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException {
 		  if(this.appartenanceEtat) {
-			  j.actionInvestissement(this, playerIndice, etat, joueurs, indiceOfJoueursToRemove);
+			  j.actionInvestissement(this, etat, joueurs, indiceOfJoueursToRemove);
 		  }
 		  else {
 			  double benef = this.benefice*this.valeurNominale;
 			  try {
-				  j.deduct(benef);
-				  joueurs.getJoueurById(this.appartenanceJoueur).credit(benef);
+				  j.transferTo(joueurs.joueurs.get(joueurs.getJoueurById(this.appartenanceJoueur)), benef);
 			  }
 			  catch(JoueurBrokeException ex) {
 				  // remove joueur from liste principale and add to joueuersPerdu  
@@ -65,7 +64,7 @@ public class CaseInvestissement extends Case {
 		return this.appartenanceEtat;
 	}
 	
-	public int getAppartenanceJoueur(){
+	public Joueur getAppartenanceJoueur(){
 		return this.appartenanceJoueur;
 	}
 }
