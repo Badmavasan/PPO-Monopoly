@@ -1,7 +1,7 @@
 package casePackage;
 
-import etatPackage.Etat;
 import exceptionPackage.EtatBrokeException;
+import jeuPackage.Simulation;
 import joueurPackage.Joueur;
 
 public class CaseSubvention extends Case{
@@ -17,12 +17,8 @@ public class CaseSubvention extends Case{
 		return this.montant;
 	}
 	
-	public void action(Joueur j,Etat etat) throws EtatBrokeException {
-		try {
-			etat.deduct(this.montant);
+	public void action(Joueur j,Simulation simul) throws EtatBrokeException {
+			simul.deductEtat(this.montant);
 			j.credit(this.montant);
-		}catch(EtatBrokeException ex) {
-			throw new EtatBrokeException();
-		}
 	}
 }

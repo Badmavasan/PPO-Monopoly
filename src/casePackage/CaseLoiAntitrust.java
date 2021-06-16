@@ -1,10 +1,9 @@
 package casePackage;
 
-import etatPackage.Etat;
 import exceptionPackage.CaseDoesNotExistEtatInvestissement;
 import exceptionPackage.PlayerInvestissementException;
+import jeuPackage.Simulation;
 import joueurPackage.Joueur;
-import plateauPackage.*;
 
 public class CaseLoiAntitrust extends Case {
 	  protected double seuil;
@@ -18,9 +17,9 @@ public class CaseLoiAntitrust extends Case {
 	    return this.seuil;
 	  }
 
-	  public void action (Joueur j,Etat etat,Plateau plateau) throws CaseDoesNotExistEtatInvestissement, PlayerInvestissementException {
+	  public void action (Joueur j,Simulation simul) throws CaseDoesNotExistEtatInvestissement, PlayerInvestissementException {
 		  if(j.getSoldesInvestissement()>seuil) {
-			  j.actionLoiAntiTrust(etat, plateau);
+			  j.actionLoiAntiTrust(simul);
 		  }
 	  }
 }

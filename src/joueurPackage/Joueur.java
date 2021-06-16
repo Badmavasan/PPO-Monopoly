@@ -4,6 +4,7 @@ import etatPackage.Etat;
 
 import java.util.*;
 import exceptionPackage.*;
+import jeuPackage.Simulation;
 import plateauPackage.Plateau;
 
 public abstract class Joueur {
@@ -129,7 +130,7 @@ public abstract class Joueur {
 		  }
 	  }
 	  
-	  public abstract void actionInvestissement(CaseInvestissement c,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement;
+	  public abstract void actionInvestissement(CaseInvestissement c,Simulation simul) throws CaseDoesNotExistEtatInvestissement, JoueurBrokeException;
 	  
-	  public abstract void actionLoiAntiTrust(Etat etat,Plateau plateau) throws PlayerInvestissementException;
+	  public abstract void actionLoiAntiTrust(Simulation simul) throws PlayerInvestissementException;
 }

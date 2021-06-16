@@ -15,28 +15,46 @@ import casePackage.*;
 public class Simulation {
 	static Scanner sc = new Scanner (System.in); // opening scanner
 	
-	public static void main(String[] args) {
-		try{
-			/* ----------------------- INITIALISATION DE JOUEURS | PLATEAU | ETAT EN FONCTION DE CONFIGURATION ------------------------- */
-			
-			ConfigurationJeu configs = menu();
-			Plateau plateau;
-			Joueurs joueurs;
-			Joueurs joueursPerdu;	
-			Etat etat = new Etat(configs);
-			plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
-			joueurs = new Joueurs(configs);
-			
-			/*----------------------------------------------------------------------------------------------------------------------------*/
-			
-			/*------------------------------------ INITIALISATION DE JOUEURS PERDU ------------------------------------------------------ */
-			
-			joueursPerdu = new Joueurs();
-			
-			/*----------------------------------------------------------------------------------------------------------------------------*/
-			
-			/*----------------------------------------------------- DEBUT JEU ---------------------------------------------------------- */
-			
+	protected ConfigurationJeu configs;
+	protected Plateau plateau;
+	protected Joueurs joueurs;
+	protected Joueurs joueursPerdu;	
+	protected Etat etat;
+
+	public Simulation() throws PlateauCreationFailedException, JoueurListCreationFailedException {
+		this.configs = menu();
+		this.etat = new Etat(configs);
+		this.plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
+		this.joueurs = new Joueurs(configs);
+		this.joueursPerdu = new Joueurs();
+	}
+	
+	public void crediterEtat(double tax) {
+		this.etat.crediter(tax);
+	}
+	
+	public void deductEtat(double sum) throws EtatBrokeException {
+		this.etat.deduct(sum);
+	}
+	
+	public void removeInvestissementEtat(CaseInvestissement c) throws CaseDoesNotExistEtatInvestissement {
+		this.etat.removeInvestissement(c);
+	}
+	
+	public void addToInvestissementEtat(CaseInvestissement c) {
+		this.etat.addToInvestissement(c);
+	}
+	
+	public void transferCaseToEtat(CaseInvestissement c) {
+		((CaseInvestissement)this.plateau.cases.get(c.getIndice()-1)).investissementBackToEtat();
+	}
+	
+	public void payTaxToAnotherPlayer(Joueur j,double tax,Joueur appartenanceJoueur) throws JoueurBrokeException, JoueurNotFoundException {
+		j.transferTo(this.joueurs.joueurs.get(joueurs.getJoueurById(appartenanceJoueur)), tax);
+	}
+	
+	public void run() throws CaseDoesNotExistException, CaseDoesNotExistEtatInvestissement, PlayerInvestissementException, JoueurNotFoundException{
+		
 			/* JeuFini est une variable qui est definie pour verifie si le jeu a terminer
 			 * Cela verifie 2 conditions :
 			 * Condition 1 : S'il reste plus qu'un joueur
@@ -63,7 +81,7 @@ public class Simulation {
 			
 			/*--------------- BOUCLE PRINCIPÂL ------------- */
 			while(!jeuFini && !etatLost){
-				List <Joueur> indiceOfJoueursToRemove = new ArrayList<Joueur>();
+				List <Joueur> JoueursToRemove = new ArrayList<Joueur>();
 				int parcours_liste_joueurs = 0;
 				int nb_joueurs = joueurs.joueurs.size();
 				while(parcours_liste_joueurs <  nb_joueurs && !etatLost) {
@@ -75,61 +93,24 @@ public class Simulation {
 					Case c = plateau.cases.get(player_current_location-1);
 					
 					Joueur j = joueurs.joueurs.get(parcours_liste_joueurs);
-					
-					if(c instanceof CaseBureauFinancesPubliques) {
-						((CaseBureauFinancesPubliques) c).action (j,etat,joueurs,joueursPerdu,parcours_liste_joueurs,indiceOfJoueursToRemove);
+					try {
+						c.action(j,this);
 					}
-					else if(c instanceof CaseInvestissement) {
-						try {
-							((CaseInvestissement) c).action(j, etat, joueurs,indiceOfJoueursToRemove);
-						}
-						catch(JoueurNotFoundException ex) {
-							System.out.println("Joueur not found exception ");
-						}
-						catch(CaseDoesNotExistEtatInvestissement ex) {
-							System.out.println("Case does not exist exception ");
-						}
+					catch(JoueurBrokeException ex) {
+						JoueursToRemove.add(j);
 					}
-					else if(c instanceof CaseSubvention) {
-						try {
-						 ((CaseSubvention)c).action(j, etat);
-						}
-						catch(EtatBrokeException ex){
-							etatLost = true;
-							System.out.println("Etat lost : " + etat.getSoldesLiquide() + "Had to pay : " +((CaseSubvention)c).getMontant());
-							
-						}
-					}
-					else if(c instanceof CaseLoiAntitrust) {
-						try {
-							((CaseLoiAntitrust)c).action(j,etat,plateau);
-						}
-						catch(CaseDoesNotExistEtatInvestissement ex) {
-							// errror that should not occur 
-						}
-						catch(PlayerInvestissementException ex) {
-							// error that should not occur
-						}
+					catch(EtatBrokeException ex) {
+						etatLost = true;
 					}
 					parcours_liste_joueurs = parcours_liste_joueurs + 1;
 				}
-				try {
-					removeJoueurPerdu(joueurs,joueursPerdu,indiceOfJoueursToRemove,etat,plateau);
-				}catch(CaseDoesNotExistException ex) {
-					// not to occur
-				}
+				removeJoueurPerdu(joueurs,joueursPerdu,JoueursToRemove,etat,plateau);
 				
 				//cont = toContinue();
 				jeuFini = checkEndofGame(joueurs/*,cont*/);
 			}
 			print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
 			/* -------------------------------------------- */
-		}catch(PlateauCreationFailedException ex){
-			System.out.println("Plateau creation has failed");
-		}catch(JoueurListCreationFailedException ex){
-			System.out.println("List Joueur creation has failed"); // throw new JoueurListCreationFailedException(); faire un system out et exit 
-		}
-		/*--------------------------------------------------------------------------------------------------------------*/
 	}
 
 	public static boolean toContinue() {

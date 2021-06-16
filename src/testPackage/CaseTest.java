@@ -123,7 +123,7 @@ public class CaseTest {
 		j.movePlayerTo(2); // on positionne un joueuer dans une case burureau finances publiques
 		CaseBureauFinancesPubliques c = (CaseBureauFinancesPubliques) plateau.cases.get(j.getPosition()-1); // on prend la case Investissemtn dans le quel le joueur est present 
 		double soldesLiquideApresAction = j.getSoldesLiquide() - j.getSoldesLiquide()*c.getImpotPercentage();
-		c.action(j, etat, joueurs, joueursPerdu,1,indiceOfJouersToRemove);
+		c.action(j, etat, joueurs, joueursPerdu,indiceOfJouersToRemove);
 		
 		/*----------------------------------------------------------------------------------*/
 		

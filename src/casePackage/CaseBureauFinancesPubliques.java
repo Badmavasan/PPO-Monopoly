@@ -1,11 +1,9 @@
 package casePackage;
 
 import exceptionPackage.JoueurBrokeException;
+import jeuPackage.Simulation;
 import joueurPackage.*;
 
-import java.util.List;
-
-import etatPackage.*;
 
 public class CaseBureauFinancesPubliques extends Case{
 	// la valeur de benefice est compris entre 0 et 100 : c'est une porcentage 
@@ -26,20 +24,14 @@ public class CaseBureauFinancesPubliques extends Case{
 		  return this.taxArgent;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs joueurs,Joueurs joueursPerdu,int parcours_joueurs_liste, List <Joueur> indiceOfJoueursToRemove) {
+	  public void action (Joueur j,Simulation simul) throws JoueurBrokeException {
 			double tax;
 			if(this.taxArgent) {
 				tax = this.impotPercentage*j.getSoldesLiquide();
 			}else {
 				tax = this.impotPercentage*j.getSoldesInvestissement();
 			}
-			try {
-				j.deduct(tax);
-				etat.crediter(tax);
-			}
-			catch(JoueurBrokeException ex) {
-				// remove joueur from liste principale and add to joueuersPerdu  
-				indiceOfJoueursToRemove.add(j);
-			}
+			j.deduct(tax);
+			simul.crediterEtat(tax);
 	  }
 }

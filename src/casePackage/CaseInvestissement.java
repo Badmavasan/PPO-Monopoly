@@ -1,9 +1,7 @@
 package casePackage;
 
-import java.util.List;
-
-import etatPackage.Etat;
 import exceptionPackage.*;
+import jeuPackage.Simulation;
 import joueurPackage.*;
 
 public class CaseInvestissement extends Case {
@@ -44,19 +42,13 @@ public class CaseInvestissement extends Case {
 		  this.appartenanceJoueur = null;
 	  }
 	  
-	  public void action (Joueur j,Etat etat,Joueurs joueurs, List <Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException {
+	  public void action (Joueur j,Simulation simul) throws CaseDoesNotExistEtatInvestissement, JoueurNotFoundException, JoueurBrokeException {
 		  if(this.appartenanceEtat) {
-			  j.actionInvestissement(this, etat, joueurs, indiceOfJoueursToRemove);
+			  j.actionInvestissement(this, simul);
 		  }
 		  else {
 			  double benef = this.benefice*this.valeurNominale;
-			  try {
-				  j.transferTo(joueurs.joueurs.get(joueurs.getJoueurById(this.appartenanceJoueur)), benef);
-			  }
-			  catch(JoueurBrokeException ex) {
-				  // remove joueur from liste principale and add to joueuersPerdu  
-				  indiceOfJoueursToRemove.add(j);
-			  }
+			  simul.payTaxToAnotherPlayer(j,benef,this.appartenanceJoueur);
 		  }
 	  }
 	

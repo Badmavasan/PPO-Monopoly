@@ -1,13 +1,10 @@
 package joueurPackage;
 
-import java.util.List;
-
 import casePackage.CaseInvestissement;
-import etatPackage.Etat;
 import exceptionPackage.CaseDoesNotExistEtatInvestissement;
 import exceptionPackage.JoueurBrokeException;
 import exceptionPackage.PlayerInvestissementException;
-import plateauPackage.Plateau;
+import jeuPackage.Simulation;
 
 public class JoueurPrudent extends Joueur{
 	
@@ -22,28 +19,22 @@ public class JoueurPrudent extends Joueur{
 		return this.investMax;
 	}
 	
-	public void actionInvestissement(CaseInvestissement c,Etat etat,Joueurs joueurs,List<Joueur> indiceOfJoueursToRemove) throws CaseDoesNotExistEtatInvestissement{
+	public void actionInvestissement(CaseInvestissement c,Simulation simul) throws CaseDoesNotExistEtatInvestissement, JoueurBrokeException{ // normally this function should never throw a joueurbroke exception
 		if(this.getInvestissement().size() < this.investMax && c.getValeurNominale() < 0.20*this.soldes_liquide){
-			try {
-				this.deduct(c.getValeurNominale());
-				etat.crediter(c.getValeurNominale());
-				c.setAppartenanceEtat(false);
-				c.setAppartenanceJoueur(this);
-				etat.removeInvestissement(c); // ca commence a 1 les indices de cases 
-				this.addToInvestissement(c);
-			}
-			catch(JoueurBrokeException ex) {
-				// remove joueur from liste principale and add to joueuersPerdu  
-				indiceOfJoueursToRemove.add(this);
-			}
+			 this.deduct(c.getValeurNominale());
+			  simul.crediterEtat(c.getValeurNominale());
+			  c.setAppartenanceEtat(false);
+			  c.setAppartenanceJoueur(this);
+			  simul.removeInvestissementEtat(c); // ca commence a 1 les indices de cases 
+			  this.addToInvestissement(c);
 		}
 	}
 	
-	public void actionLoiAntiTrust(Etat etat,Plateau plateau) throws PlayerInvestissementException {
+	public void actionLoiAntiTrust(Simulation simul) throws PlayerInvestissementException {
 		CaseInvestissement toRemove = this.getMaxInvestissement();
-		etat.addToInvestissement(toRemove);
+		simul.addToInvestissementEtat(toRemove);
 		this.removeInvestissement(toRemove);
-		((CaseInvestissement)plateau.cases.get(toRemove.getIndice()-1)).investissementBackToEtat();
+		simul.transferCaseToEtat(toRemove);
 	}
 	
 }
