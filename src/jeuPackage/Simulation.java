@@ -11,7 +11,10 @@ import joueurPackage.*;
 import plateauPackage.*;
 import etatPackage.*;
 import casePackage.*;
-
+/* @startuml
+ * testdot
+ * @enduml
+ */
 public class Simulation {
 	static Scanner sc = new Scanner (System.in); // opening scanner
 	
@@ -29,6 +32,15 @@ public class Simulation {
 		this.joueursPerdu = new Joueurs();
 	}
 	
+	/* We create another constructor for the tests*/
+	public Simulation(ConfigurationJeu configs) throws PlateauCreationFailedException, JoueurListCreationFailedException {
+		this.configs = configs;
+		this.etat = new Etat(configs);
+		this.plateau = new Plateau(configs,etat); /* Sera initalisé apres avoir apris les configuration de la part de l'utilisateur */
+		this.joueurs = new Joueurs(configs);
+		this.joueursPerdu = new Joueurs();
+	}
+
 	public void crediterEtat(double tax) {
 		this.etat.crediter(tax);
 	}
@@ -106,8 +118,8 @@ public class Simulation {
 				}
 				removeJoueurPerdu(joueurs,joueursPerdu,JoueursToRemove,etat,plateau);
 				
-				//cont = toContinue();
-				jeuFini = checkEndofGame(joueurs/*,cont*/);
+				cont = toContinue();
+				jeuFini = checkEndofGame(joueurs,cont);
 			}
 			print_jeu(/*cont,*/etatLost,joueursPerdu,joueurs,etat);
 			/* -------------------------------------------- */
@@ -126,13 +138,13 @@ public class Simulation {
 		}
 	}
 	
-	public static boolean checkEndofGame(Joueurs joueurs/*, boolean cont*/){ 
+	public static boolean checkEndofGame(Joueurs joueurs, boolean cont){ 
 		if(joueurs.joueurs.size()==1){
 			return true;
 		}
-//		else if(!cont) {
-//			return true;
-//		}
+		else if(!cont) {
+			return true;
+		}
 		else {
 			return false;
 		}
